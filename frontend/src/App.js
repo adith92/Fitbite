@@ -66,6 +66,36 @@ const formatPrice = (price) =>
 
 const cloneData = (value) => JSON.parse(JSON.stringify(value));
 
+const readFileAsDataUrl = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("Gagal membaca file gambar."));
+    reader.readAsDataURL(file);
+  });
+
+const BrandMark = ({ logo, name, size = "default" }) => {
+  const boxClass =
+    size === "large" ? "w-16 h-16 rounded-2xl" : "w-10 h-10 rounded-xl";
+  const iconClass = size === "large" ? "w-8 h-8" : "w-6 h-6";
+
+  if (logo) {
+    return (
+      <img
+        src={logo}
+        alt={name}
+        className={`${boxClass} object-cover border border-white/10 bg-white/10`}
+      />
+    );
+  }
+
+  return (
+    <div className={`${boxClass} bg-gradient-to-br from-[#1E90FF] to-[#0066cc] flex items-center justify-center`}>
+      <Zap className={`${iconClass} text-white`} />
+    </div>
+  );
+};
+
 const loadStoredAuth = () => {
   try {
     return JSON.parse(sessionStorage.getItem(AUTH_STORAGE_KEY) || "null");
@@ -295,7 +325,7 @@ const SectionHeader = ({ label, title, description, light = false }) => (
   </div>
 );
 
-const Navbar = ({ scrollProgress, brandName, auth, onLogout }) => {
+const Navbar = ({ scrollProgress, brandName, brandLogo, auth, onLogout }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -330,9 +360,7 @@ const Navbar = ({ scrollProgress, brandName, auth, onLogout }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           <a href="#top" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-[#1E90FF] to-[#0066cc] rounded-xl flex items-center justify-center">
-              <Zap className="w-6 h-6 text-white" />
-            </div>
+            <BrandMark logo={brandLogo} name={brandName} />
             <span className="font-bold text-lg md:text-xl text-white font-['Outfit']">
               {brandName}
             </span>
@@ -806,9 +834,10 @@ const Footer = ({ content }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#1E90FF] to-[#0066cc] rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6 text-white" />
-              </div>
+              <BrandMark
+                logo={content.siteConfig.brandLogo}
+                name={content.siteConfig.brandName}
+              />
               <span className="font-bold text-lg text-white font-['Outfit']">{content.siteConfig.brandName}</span>
             </div>
             <p className="text-white/50 text-sm">
@@ -1032,6 +1061,7 @@ const StorefrontPage = ({ content, auth, onLogout }) => {
       <Navbar
         scrollProgress={scrollProgress}
         brandName={content.siteConfig.brandName}
+        brandLogo={content.siteConfig.brandLogo}
         auth={auth}
         onLogout={onLogout}
       />
@@ -1277,6 +1307,13 @@ const AdminDashboard = ({
     }));
   };
 
+  const handleBrandLogoUpload = async (file) => {
+    if (!file) return;
+    const dataUrl = await readFileAsDataUrl(file);
+    updateSiteConfig("brandLogo", dataUrl);
+    setMessage("Logo brand berhasil dimuat ke draft ✨");
+  };
+
   const updateSectionText = (field, value) => {
     setDraft((previous) => ({
       ...previous,
@@ -1337,6 +1374,13 @@ const AdminDashboard = ({
       ...previous,
       products: updateArrayItem(previous.products, index, { [field]: value }),
     }));
+  };
+
+  const handleProductImageUpload = async (productIndex, file) => {
+    if (!file) return;
+    const dataUrl = await readFileAsDataUrl(file);
+    updateProduct(productIndex, "image", dataUrl);
+    setMessage("Gambar produk berhasil dimuat ke draft 🖼️");
   };
 
   const removeProduct = (index) => {
@@ -1436,6 +1480,13 @@ const AdminDashboard = ({
     }));
   };
 
+  const handleTestimonialAvatarUpload = async (testimonialIndex, file) => {
+    if (!file) return;
+    const dataUrl = await readFileAsDataUrl(file);
+    updateTestimonial(testimonialIndex, "avatar", dataUrl);
+    setMessage("Avatar testimoni berhasil dimuat ke draft 🙌");
+  };
+
   const addTestimonial = () => {
     setDraft((previous) => ({
       ...previous,
@@ -1510,6 +1561,30 @@ const AdminDashboard = ({
             <div>
               <label>Nama Brand</label>
               <input value={draft.siteConfig.brandName} onChange={(event) => updateSiteConfig("brandName", event.target.value)} />
+            </div>
+            <div>
+              <label>Logo Brand</label>
+              <div className="image-upload-row">
+                <BrandMark
+                  logo={draft.siteConfig.brandLogo}
+                  name={draft.siteConfig.brandName}
+                  size="large"
+                />
+                <label className="upload-button">
+                  <Upload className="w-4 h-4" />
+                  Upload Logo
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={(event) =>
+                      handleBrandLogoUpload(event.target.files?.[0]).catch((error) =>
+                        setMessage(error.message),
+                      )
+                    }
+                  />
+                </label>
+              </div>
             </div>
             <div>
               <label>Hero Title Atas</label>
@@ -1598,6 +1673,26 @@ const AdminDashboard = ({
                 <div className="admin-field-full">
                   <label>Alt Text</label>
                   <input value={product.imageAlt} onChange={(event) => updateProduct(productIndex, "imageAlt", event.target.value)} />
+                </div>
+                <div className="admin-field-full">
+                  <label>Upload Gambar Produk</label>
+                  <div className="image-upload-row image-upload-card">
+                    <img src={product.image} alt={product.imageAlt} className="admin-image-preview" />
+                    <label className="upload-button">
+                      <Upload className="w-4 h-4" />
+                      Ganti Gambar
+                      <input
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        onChange={(event) =>
+                          handleProductImageUpload(productIndex, event.target.files?.[0]).catch((error) =>
+                            setMessage(error.message),
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
                 </div>
               </div>
               <div className="variant-list">
@@ -1692,6 +1787,26 @@ const AdminDashboard = ({
                   <div className="admin-field-full">
                     <label>Isi Testimoni</label>
                     <textarea value={testimonial.text} onChange={(event) => updateTestimonial(index, "text", event.target.value)} rows={3} />
+                  </div>
+                  <div className="admin-field-full">
+                    <label>Upload Avatar</label>
+                    <div className="image-upload-row image-upload-card">
+                      <img src={testimonial.avatar} alt={testimonial.name} className="admin-avatar-preview" />
+                      <label className="upload-button">
+                        <Upload className="w-4 h-4" />
+                        Ganti Avatar
+                        <input
+                          type="file"
+                          accept="image/*"
+                          hidden
+                          onChange={(event) =>
+                            handleTestimonialAvatarUpload(index, event.target.files?.[0]).catch((error) =>
+                              setMessage(error.message),
+                            )
+                          }
+                        />
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>

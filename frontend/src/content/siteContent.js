@@ -12,6 +12,7 @@ export const defaultSiteContent = {
   },
   siteConfig: {
     brandName: "Digital Hypebeast",
+    brandLogo: "",
     heroTitleTop: "Top Up Game &",
     heroTitleAccent: "Jasa Digital",
     heroDescription:
