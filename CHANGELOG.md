@@ -7,6 +7,7 @@
 - Halaman login gabungan untuk `Admin` dan `User`
 - Route hash-based untuk `/#/login`, `/#/admin`, dan `/#/user`
 - Panel admin frontend untuk edit konten utama website
+- Upload logo brand, gambar produk, dan avatar testimoni langsung dari panel admin
 - Export dan import `site-content.json` untuk workflow shared hosting/cPanel
 - Draft konten lokal via `localStorage` untuk preview cepat tanpa sentuh file dulu
 - User dashboard sederhana untuk role user
@@ -16,6 +17,7 @@
 ### Changed
 
 - Login admin dan user digabung ke satu pintu login
+- README dirapikan total dan dijelaskan bahwa project ini sekarang enak diteruskan pakai AI terutama Codex
 - Struktur konten dipusatkan ke `frontend/src/content/siteContent.js`
 - Runtime konten dipisah ke `frontend/public/site-content.json`
 - Landing page sekarang baca konten dari sumber default, file JSON hosting, atau draft lokal
