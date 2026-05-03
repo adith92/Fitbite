@@ -1,0 +1,18 @@
+<svg width="640" height="640" viewBox="0 0 640 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="640" rx="48" fill="url(#bg)"/>
+  <path d="M130 418C168 314 242 218 320 170C398 218 472 314 510 418" fill="url(#wing)"/>
+  <path d="M320 158L384 240L350 268L394 354L320 320L246 354L290 268L256 240L320 158Z" fill="#F8FAFC"/>
+  <path d="M225 432L320 380L415 432L320 488L225 432Z" fill="#FCD34D"/>
+  <text x="320" y="555" text-anchor="middle" fill="#F8FAFC" font-size="48" font-family="Arial, sans-serif" font-weight="700">MOBILE LEGENDS</text>
+  <defs>
+    <linearGradient id="bg" x1="54" y1="46" x2="578" y2="594" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F172A"/>
+      <stop offset="0.55" stop-color="#1D4ED8"/>
+      <stop offset="1" stop-color="#60A5FA"/>
+    </linearGradient>
+    <linearGradient id="wing" x1="130" y1="170" x2="510" y2="418" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FCD34D" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#F59E0B" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+</svg>

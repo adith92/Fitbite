@@ -1,0 +1,13 @@
+<svg width="640" height="640" viewBox="0 0 640 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="640" rx="48" fill="url(#bg)"/>
+  <path d="M216 154H425L388 228H338L420 486H329L314 392L276 486H195L286 278H248L216 154Z" fill="#FFF7ED"/>
+  <rect x="298" y="202" width="26" height="118" rx="13" fill="#F59E0B"/>
+  <text x="320" y="556" text-anchor="middle" fill="#FFF7ED" font-size="64" font-family="Arial, sans-serif" font-weight="800">FREE FIRE</text>
+  <defs>
+    <linearGradient id="bg" x1="58" y1="40" x2="586" y2="596" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="0.58" stop-color="#7C2D12"/>
+      <stop offset="1" stop-color="#EA580C"/>
+    </linearGradient>
+  </defs>
+</svg>

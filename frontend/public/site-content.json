@@ -1,0 +1,203 @@
+{
+  "auth": {
+    "admin": {
+      "username": "admin",
+      "password": "admin12345"
+    },
+    "user": {
+      "headline": "Akun Pengguna",
+      "description": "Masuk sebagai pengguna untuk melihat ringkasan produk, kontak toko, dan arahan pemesanan."
+    }
+  },
+  "siteConfig": {
+    "brandName": "Digital Hypebeast",
+    "heroTitleTop": "Top Up Game &",
+    "heroTitleAccent": "Jasa Digital",
+    "heroDescription": "Layanan top up game, voucher digital, dan kebutuhan website bisnis dengan proses cepat, tampilan profesional, dan kontak yang mudah diakses.",
+    "heroPrimaryCta": "Top Up Sekarang",
+    "heroSecondaryCta": "Lihat Layanan",
+    "transactionStartingCount": 1273,
+    "sectionLabels": {
+      "products": "Produk Digital",
+      "services": "Layanan Kami",
+      "whyChoose": "Keunggulan",
+      "testimonials": "Testimoni",
+      "payments": "Pembayaran",
+      "transactions": "Aktivitas",
+      "about": "Tentang Kami",
+      "contact": "Kontak"
+    },
+    "sections": {
+      "productsTitle": "Top Up Game & Voucher",
+      "productsDescription": "Pilih game atau voucher favorit, tentukan nominal, lalu lanjutkan checkout simulasi dengan tampilan yang siap disesuaikan.",
+      "servicesTitle": "Layanan Digital Profesional",
+      "servicesDescription": "Cocok untuk promo jasa website, konsultasi, dan kebutuhan digital lainnya dalam satu landing page.",
+      "whyChooseTitle": "Kenapa Pilih Kami?",
+      "testimonialsTitle": "Apa Kata Mereka?",
+      "paymentsTitle": "Metode Pembayaran",
+      "paymentsDescription": "Daftar metode pembayaran ini masih statis dan bisa kamu ganti sesuai akun bisnis yang dipakai.",
+      "transactionsTitle": "Transaksi Terakhir",
+      "aboutTitle": "Digital Hypebeast",
+      "aboutDescription": "Template ini disiapkan untuk promosi top up game dan layanan digital dalam format landing page statis. Semua konten utama sudah dipusatkan agar mudah diubah tanpa harus menyentuh logika komponen.",
+      "contactTitle": "Hubungi Kami",
+      "contactDescription": "Kalau mau order atau konsultasi, arahkan pengunjung ke kontak utama yang kamu pakai sekarang."
+    },
+    "trustBadges": [
+      "Trusted Digital Service",
+      "1000+ Transaksi Berhasil",
+      "Layanan 24/7"
+    ],
+    "whyChoose": [
+      {
+        "icon": "zap",
+        "title": "Proses Instan",
+        "description": "Alur checkout ringkas untuk simulasi transaksi yang cepat dipahami pengunjung."
+      },
+      {
+        "icon": "shield",
+        "title": "Tampilan Rapi",
+        "description": "Semua isi utama dipisah ke file konten agar edit harga dan teks lebih aman."
+      },
+      {
+        "icon": "clock",
+        "title": "Siap Shared Hosting",
+        "description": "Frontend bisa di-build jadi file statis dan diunggah langsung ke hosting biasa."
+      }
+    ],
+    "paymentMethods": [
+      {
+        "id": "bank",
+        "icon": "card",
+        "title": "Transfer Bank",
+        "description": "BCA, Mandiri, BNI, BRI"
+      },
+      {
+        "id": "ewallet",
+        "icon": "wallet",
+        "title": "E-Wallet",
+        "description": "GoPay, OVO, DANA, ShopeePay"
+      },
+      {
+        "id": "qris",
+        "icon": "qris",
+        "title": "QRIS",
+        "description": "Scan dan bayar langsung"
+      }
+    ],
+    "contact": {
+      "label": "@DigitalHypebeast",
+      "url": "https://t.me/DigitalHypebeast"
+    }
+  },
+  "products": [
+    {
+      "id": 1,
+      "name": "Mobile Legends",
+      "image": "/images/products/mobile-legends.svg",
+      "imageAlt": "Logo Mobile Legends",
+      "variants": [
+        { "id": 1, "name": "86 Diamond", "price": 20000 },
+        { "id": 2, "name": "172 Diamond", "price": 40000 },
+        { "id": 3, "name": "257 Diamond", "price": 60000 }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Free Fire",
+      "image": "/images/products/free-fire.svg",
+      "imageAlt": "Logo Free Fire",
+      "variants": [
+        { "id": 1, "name": "70 Diamond", "price": 10000 },
+        { "id": 2, "name": "140 Diamond", "price": 19000 }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "PUBG Mobile",
+      "image": "/images/products/pubg-mobile.svg",
+      "imageAlt": "Logo PUBG Mobile",
+      "variants": [
+        { "id": 1, "name": "60 UC", "price": 15000 },
+        { "id": 2, "name": "325 UC", "price": 74000 }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Google Play",
+      "image": "/images/products/google-play.svg",
+      "imageAlt": "Logo Google Play",
+      "variants": [
+        { "id": 1, "name": "Voucher Rp50.000", "price": 50000 },
+        { "id": 2, "name": "Voucher Rp100.000", "price": 100000 }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Steam Wallet",
+      "image": "/images/products/steam-wallet.svg",
+      "imageAlt": "Logo Steam Wallet",
+      "variants": [
+        { "id": 1, "name": "Voucher Rp60.000", "price": 60000 },
+        { "id": 2, "name": "Voucher Rp120.000", "price": 120000 }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "id": 1,
+      "icon": "code",
+      "title": "Pembuatan Website",
+      "description": "Landing page, company profile, dan katalog sederhana untuk bisnis lokal atau online shop."
+    },
+    {
+      "id": 2,
+      "icon": "message",
+      "title": "Konsultasi Digital",
+      "description": "Bantu susun alur promosi, tampilan web, dan kebutuhan digital dasar supaya bisnis lebih siap online."
+    },
+    {
+      "id": 3,
+      "icon": "palette",
+      "title": "Update Konten",
+      "description": "Ganti harga, banner, testimoni, dan informasi promo secara cepat dari satu file konten."
+    }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "name": "Andi",
+      "avatar": "/images/testimonials/andi.svg",
+      "text": "Top up cepat dan tampilannya bikin toko digital kelihatan lebih meyakinkan.",
+      "rating": 5
+    },
+    {
+      "id": 2,
+      "name": "Budi",
+      "avatar": "/images/testimonials/budi.svg",
+      "text": "Harga gampang diubah, bagian produk juga rapi. Enak buat promosi harian.",
+      "rating": 5
+    },
+    {
+      "id": 3,
+      "name": "Rina",
+      "avatar": "/images/testimonials/rina.svg",
+      "text": "Cocok buat shared hosting karena tinggal upload hasil build tanpa backend ribet.",
+      "rating": 5
+    }
+  ],
+  "recentActivities": [
+    { "name": "Budi", "product": "86 Diamond Mobile Legends" },
+    { "name": "Andi", "product": "Voucher Google Play Rp50.000" },
+    { "name": "Rina", "product": "Free Fire 140 Diamond" },
+    { "name": "Dimas", "product": "PUBG Mobile 60 UC" },
+    { "name": "Sari", "product": "Steam Wallet Rp120.000" },
+    { "name": "Rudi", "product": "172 Diamond Mobile Legends" }
+  ],
+  "fakeTransactions": [
+    { "name": "Budi", "product": "ML 86 Diamond", "status": "Sukses" },
+    { "name": "Andi", "product": "PUBG 60 UC", "status": "Diproses" },
+    { "name": "Rina", "product": "FF 140 Diamond", "status": "Sukses" },
+    { "name": "Dimas", "product": "Google Play Rp50.000", "status": "Sukses" },
+    { "name": "Sari", "product": "Steam Wallet Rp120.000", "status": "Diproses" }
+  ]
+}
