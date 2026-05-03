@@ -24,14 +24,14 @@
 
 1. Jalankan website lokal atau buka hasil upload hosting.
 2. Masuk ke `/#/login`.
-3. Pilih tab `Admin`.
-4. Login pakai username dan password dari:
+3. Login pakai username dan password admin dari:
 
 ```text
 frontend/src/content/siteContent.js
 ```
 
-5. Setelah masuk, kamu akan diarahkan ke `/#/admin`.
+4. Kalau cocok dengan akun admin, kamu otomatis diarahkan ke `/#/admin`.
+5. Kalau bukan akun admin, login tetap masuk ke portal user.
 
 ## Cara edit konten lewat panel admin
 
@@ -64,7 +64,7 @@ frontend/public/site-content.json
 ### Opsi 1: lewat panel admin
 
 1. Login ke `/#/login`
-2. Masuk tab `Admin`
+2. Masuk dengan akun admin
 3. Di section `Produk, Harga, dan Icon Path`, ubah harga varian
 4. Simpan draft
 5. Export JSON

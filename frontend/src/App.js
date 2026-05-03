@@ -18,14 +18,11 @@ import {
   Code,
   CreditCard,
   Download,
-  FileUp,
   Loader2,
-  Lock,
   LogIn,
   LogOut,
   MessageSquare,
   Palette,
-  Pencil,
   Plus,
   QrCode,
   Save,
@@ -35,7 +32,6 @@ import {
   Trash2,
   TrendingUp,
   Upload,
-  User,
   Users,
   Wallet,
   X,
@@ -1062,11 +1058,8 @@ const StorefrontPage = ({ content, auth, onLogout }) => {
 };
 
 const LoginPage = ({ content, onLogin, auth }) => {
-  const [role, setRole] = useState("user");
-  const [adminUsername, setAdminUsername] = useState("");
-  const [adminPassword, setAdminPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -1079,25 +1072,21 @@ const LoginPage = ({ content, onLogin, auth }) => {
     event.preventDefault();
     setError("");
 
-    if (role === "admin") {
-      if (
-        adminUsername === content.auth.admin.username &&
-        adminPassword === content.auth.admin.password
-      ) {
-        onLogin({ role: "admin", name: "Administrator" });
-        navigate("/admin");
-        return;
-      }
-      setError("Username atau password admin belum cocok.");
+    if (!username.trim() || !password.trim()) {
+      setError("Username dan password wajib diisi.");
       return;
     }
 
-    if (!userName.trim() || !userEmail.trim()) {
-      setError("Nama dan email pengguna wajib diisi.");
+    if (
+      username.trim() === content.auth.admin.username &&
+      password === content.auth.admin.password
+    ) {
+      onLogin({ role: "admin", name: "Administrator" });
+      navigate("/admin");
       return;
     }
 
-    onLogin({ role: "user", name: userName.trim(), email: userEmail.trim() });
+    onLogin({ role: "user", name: username.trim() });
     navigate("/user");
   };
 
@@ -1113,76 +1102,32 @@ const LoginPage = ({ content, onLogin, auth }) => {
           <span className="section-kicker">Portal Login</span>
           <h1>{content.siteConfig.brandName}</h1>
           <p>
-            Login admin dan user ada di halaman yang sama. Admin masuk ke panel edit,
-            user masuk ke panel informasi pelanggan.
+            Satu pintu login buat akses portal. Kalau kredensial yang masuk cocok dengan akun admin,
+            sistem bakal otomatis arahin ke panel admin. Selain itu bakal masuk ke portal user.
           </p>
         </div>
 
-        <div className="login-role-switch">
-          <button
-            type="button"
-            onClick={() => setRole("user")}
-            className={role === "user" ? "active" : ""}
-          >
-            <User className="w-4 h-4" />
-            User
-          </button>
-          <button
-            type="button"
-            onClick={() => setRole("admin")}
-            className={role === "admin" ? "active" : ""}
-          >
-            <Lock className="w-4 h-4" />
-            Admin
-          </button>
-        </div>
-
         <form onSubmit={handleSubmit} className="portal-form">
-          {role === "admin" ? (
-            <>
-              <div>
-                <label>Username Admin</label>
-                <input
-                  value={adminUsername}
-                  onChange={(event) => setAdminUsername(event.target.value)}
-                  placeholder="Masukkan username admin"
-                />
-              </div>
-              <div>
-                <label>Password Admin</label>
-                <input
-                  type="password"
-                  value={adminPassword}
-                  onChange={(event) => setAdminPassword(event.target.value)}
-                  placeholder="Masukkan password admin"
-                />
-              </div>
-              <div className="portal-note">
-                Login admin ini frontend-only. Untuk keamanan beneran di hosting, lindungi folder admin juga lewat cPanel.
-              </div>
-            </>
-          ) : (
-            <>
-              <div>
-                <label>Nama Pengguna</label>
-                <input
-                  value={userName}
-                  onChange={(event) => setUserName(event.target.value)}
-                  placeholder="Masukkan nama"
-                />
-              </div>
-              <div>
-                <label>Email Pengguna</label>
-                <input
-                  type="email"
-                  value={userEmail}
-                  onChange={(event) => setUserEmail(event.target.value)}
-                  placeholder="Masukkan email"
-                />
-              </div>
-              <div className="portal-note">{content.auth.user.description}</div>
-            </>
-          )}
+          <div>
+            <label>Username</label>
+            <input
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              placeholder="Masukkan username"
+            />
+          </div>
+          <div>
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Masukkan password"
+            />
+          </div>
+          <div className="portal-note">
+            {content.auth.user.description}
+          </div>
 
           {error ? <p className="portal-error">{error}</p> : null}
 
@@ -1596,7 +1541,7 @@ const AdminDashboard = ({
         <section className="admin-card">
           <div className="admin-section-head">
             <h2>Login Admin</h2>
-            <p>Route login admin dan user tetap satu halaman, tapi role admin diarahkan ke dashboard ini.</p>
+            <p>Login sekarang satu pintu. Kalau username dan password cocok, akses otomatis masuk ke panel admin.</p>
           </div>
           <div className="admin-form-grid">
             <div>

@@ -15,6 +15,7 @@
 
 ### Changed
 
+- Login admin dan user digabung ke satu pintu login
 - Struktur konten dipusatkan ke `frontend/src/content/siteContent.js`
 - Runtime konten dipisah ke `frontend/public/site-content.json`
 - Landing page sekarang baca konten dari sumber default, file JSON hosting, atau draft lokal

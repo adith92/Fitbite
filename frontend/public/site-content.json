@@ -1,11 +1,11 @@
 {
   "auth": {
     "admin": {
-      "username": "admin",
-      "password": "admin12345"
+      "username": "adith92",
+      "password": "210192"
     },
     "user": {
-      "headline": "Akun Pengguna",
+      "headline": "Portal Pengguna",
       "description": "Masuk sebagai pengguna untuk melihat ringkasan produk, kontak toko, dan arahan pemesanan."
     }
   },
