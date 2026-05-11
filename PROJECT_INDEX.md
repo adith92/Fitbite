@@ -1,8 +1,8 @@
 # Fitbite Project Index
 
-Version: V1.3
+Version: V1.2.1
 
-File ini adalah indeks utama untuk developer/AI yang bekerja di repo Fitbite.
+File ini adalah indeks utama untuk ChatGPT, Codex, dan developer yang bekerja di repo Fitbite.
 
 ## Project Identity
 
@@ -10,43 +10,35 @@ Fitbite adalah aplikasi healthy food-tech untuk Indonesia.
 
 Fitur inti:
 
-- Body check dan target nutrisi.
-- Input bahan dapur (pantry).
+- Body check.
+- Nutrition target.
+- Pantry ingredient input.
 - AI recipe recommendation.
-- Healthy catering order (demo flow).
-- Admin dashboard preview.
-- Telegram notification helper.
-- Business report plan.
+- Healthy catering order.
+- Admin dashboard.
+- Telegram/WhatsApp notification (WhatsApp masih plan).
+- Business report.
 
 ## Current Status
 
-Current version: V1.3
+- Current version: V1.2.1 - Repository Indexing and Build Cleanup
+- Current phase: Repo indexing cleanup dan deployable demo base
+- Next phase: V1.3 Customer Core
 
-Current phase: Deployable interactive demo base.
+## Main Routes
 
-Next phase: Customer core implementation.
+- `/` -> interactive demo mockup Fitbite
+- `/body-check` -> body check overview
+- `/ingredients` -> pantry ingredient input overview
+- `/admin` -> admin dashboard preview
 
-## Main Product Flow
+## Architecture
 
-1. User isi data tubuh.
-2. App hitung BMI, BMR, TDEE, kalori, dan makro (estimasi).
-3. User input bahan yang ada di rumah.
-4. App beri rekomendasi resep sehat lokal.
-5. User bisa lanjut order catering sehat.
-6. Order masuk admin dashboard.
-7. Owner menerima notifikasi (Telegram helper).
-8. Kitchen dan delivery masih manual untuk MVP awal.
-9. Report bisnis dirangkum bertahap.
-
-## Active Structure (Root)
-
-- `app/` -> Next.js App Router pages.
-- `lib/` -> helper logic.
-- `docs/` -> dokumen produk, roadmap, changelog, deploy.
-- `memory/` -> catatan produk Fitbite.
-- `package.json` -> root config build.
-- `next.config.ts`, `tsconfig.json`, `postcss.config.js`.
-- `vercel.json` -> deployment hint aman untuk Vercel.
+- Frontend: Next.js App Router + TypeScript
+- Styling: CSS sederhana (aman untuk build demo)
+- Backend plan: Supabase + PostgreSQL
+- Notification MVP: Telegram helper
+- Deploy target: Vercel (`fitbitedemo`)
 
 ## Important Files
 
@@ -59,6 +51,7 @@ Next phase: Customer core implementation.
 - `docs/ROADMAP.md`
 - `docs/VERCEL_DEPLOY.md`
 - `docs/LEGACY_NOTES.md`
+- `app/layout.tsx`
 - `app/page.tsx`
 - `app/body-check/page.tsx`
 - `app/ingredients/page.tsx`
@@ -66,25 +59,34 @@ Next phase: Customer core implementation.
 - `lib/nutrition.ts`
 - `lib/telegram.ts`
 
-## Versioning Rule
+## How To Build
 
-Setiap perubahan berarti wajib dicatat di `docs/FITBITE_CHANGELOG.md`.
+```bash
+npm install
+npm run build
+```
 
-Urutan versi utama:
+## How To Deploy
 
-- V1.0 Initial scaffold.
-- V1.1 Documentation and project brain.
-- V1.2 Interactive demo mockup and deploy preparation.
-- V1.3 Deployable demo cleanup dan Vercel-ready base.
-- V1.4 Pantry and recipe MVP.
-- V1.5 Catering order MVP.
-- V1.6 Admin dashboard MVP.
-- V1.7 Reports.
-- V2.0 AI and automation.
+- Import repo `adith92/Fitbite` ke Vercel
+- Project name: `fitbitedemo`
+- Framework: Next.js
+- Build command: `npm run build`
+- Output: default
+- Env vars: tidak wajib untuk demo V1.2.1
 
-## Rules
+## Next Task
 
-- Selalu baca `PROJECT_INDEX.md` dan `AI_README.md` dulu.
-- Untuk user-facing copy, gunakan Bahasa Indonesia.
-- Hindari klaim medis; kalkulasi nutrisi adalah estimasi.
-- Jangan implement payment gateway/delivery API/WhatsApp API di tahap demo ini.
+Lanjut ke V1.3 Customer Core secara bertahap: body data form, nutrition estimator UI, pantry flow, dan recipe data structure yang lebih realistis.
+
+## Instruction For AI/Codex
+
+- Baca file ini terlebih dahulu.
+- Lanjut baca `AI_README.md` dan `docs/PROJECT_CONTEXT_PROMPT.md`.
+- Setiap perubahan penting wajib update `docs/FITBITE_CHANGELOG.md`.
+- Jangan implement payment gateway, delivery API, atau WhatsApp API di tahap ini.
+- Hindari klaim medis; semua nutrisi bersifat estimasi.
+
+## Indexing Note
+
+Repo ini harus dipilih dari ChatGPT GitHub connector melalui Configure Repositories. Jika masih Not indexed, pilih repo `adith92/Fitbite`, tunggu proses indexing, lalu refresh ChatGPT. Semua konteks utama repo tersedia di `PROJECT_INDEX.md`, `AI_README.md`, dan `docs/PROJECT_CONTEXT_PROMPT.md`.

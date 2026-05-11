@@ -7,12 +7,40 @@ Semua perubahan penting project Fitbite dicatat di file ini.
 - V1.0 = versi awal
 - V1.1 = update dokumentasi dan project brain
 - V1.2 = interactive demo mockup and deploy preparation
+- V1.2.1 = repository indexing and build cleanup
 - V1.3 = customer core
 - V1.4 = pantry and recipe MVP
 - V1.5 = catering order MVP
 - V1.6 = admin dashboard MVP
 - V1.7 = reports
 - V2.0 = AI and automation
+
+---
+
+## V1.2.1 - Repository Indexing and Build Cleanup
+
+Tanggal: 2026-05-11
+
+Added:
+
+- Menambahkan section `Indexing Note` di `PROJECT_INDEX.md` untuk panduan ChatGPT GitHub connector saat status `Not indexed`.
+- Menambahkan penjelasan build/deploy yang lebih eksplisit untuk indexing context AI.
+
+Changed:
+
+- Menyelaraskan dokumen inti ke status V1.2.1: `PROJECT_INDEX.md`, `AI_README.md`, `README.md`, dan `docs/VERCEL_DEPLOY.md`.
+- Menegaskan root structure sebagai Next.js App Router yang fokus ke Fitbite.
+
+Fixed:
+
+- Validasi install dependency (`npm install`) berhasil.
+- Validasi production build (`npm run build`) berhasil untuk route `/`, `/body-check`, `/ingredients`, dan `/admin`.
+- Repo context menjadi lebih ringkas dan mudah dipindai untuk proses indexing ChatGPT/Codex.
+
+Pending:
+
+- Tunggu proses indexing selesai di ChatGPT connector setelah repo dipilih melalui Configure Repositories.
+- Import/deploy ke Vercel project `fitbitedemo` dan verifikasi domain `fitbitedemo.vercel.app`.
 
 ---
 

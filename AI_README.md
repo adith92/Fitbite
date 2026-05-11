@@ -12,25 +12,17 @@ Mulai dari file ini jika kamu AI assistant yang bekerja di repo Fitbite.
 
 ## Current Version
 
-V1.3
+V1.2.1
 
 ## Current Mission
 
-Jaga repo tetap deployable di Vercel sebagai demo interaktif Fitbite, lalu lanjut bertahap ke customer core.
+Rapikan repo agar mudah di-index oleh ChatGPT/Codex, tetap buildable, dan siap deploy demo di Vercel.
 
-## Do Not Skip
+## Rules
 
-- Jangan hapus file konteks Fitbite.
-- Jangan lewati changelog.
+- Jangan hapus file konteks inti Fitbite.
+- Setiap perubahan penting wajib update changelog.
 - Jangan implement payment gateway dulu.
 - Jangan implement delivery API dulu.
-- Jangan implement WhatsApp Cloud API dulu.
-- Jangan klaim hasil nutrisi sebagai diagnosis medis.
-
-## Main Rule
-
-Setiap perubahan penting wajib update `docs/FITBITE_CHANGELOG.md`.
-
-## Product Short Summary
-
-Fitbite adalah aplikasi healthy food-tech Indonesia untuk body check, pantry ingredient input, rekomendasi resep sehat lokal, dan order catering sehat dengan dashboard admin.
+- Jangan implement WhatsApp API dulu.
+- Hindari klaim medis; kalkulasi nutrisi adalah estimasi.

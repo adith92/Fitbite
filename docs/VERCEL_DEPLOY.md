@@ -17,7 +17,7 @@ Settings:
 
 Environment variables:
 
-- Tidak ada env wajib untuk demo V1.3.
+- Tidak ada env wajib untuk demo V1.2.1.
 - `.env.example` hanya placeholder untuk integrasi backend tahap berikutnya.
 
 Test routes setelah deploy:

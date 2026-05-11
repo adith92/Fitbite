@@ -31,7 +31,7 @@ Architecture:
 - Notification MVP: Telegram Bot.
 - Future: WhatsApp Cloud API, payment gateway, delivery API, photo scan, voice input.
 
-Current next step: V1.2 clean repo and deploy base.
+Current next step: V1.3 customer core, setelah V1.2.1 indexing dan build cleanup selesai.
 
 Rules:
 
