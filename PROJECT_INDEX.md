@@ -1,13 +1,13 @@
 # Fitbite Project Index
 
-Version: V1.3.4
+Version: V1.4
 
 ## 🔒 Production Release Lock
 
 Release utama saat ini:
 
 ```txt
-Version     : V1.3.4
+Version     : V1.4
 Project     : fitbitedemo
 Team        : adith92s-projects
 Production  : https://fitbitedemo.vercel.app
@@ -19,9 +19,9 @@ Fitbite adalah aplikasi healthy food-tech Indonesia yang menggabungkan body chec
 
 ## Current Status
 
-- Current version: V1.3.4 - Ingredient Box Wizard
-- Current phase: Stabilkan input bahan terstruktur dan alur cek menu
-- Next phase: QUEUE-FB-3 Recipe Result UX
+- Current version: V1.4 - Pantry and Recipe MVP
+- Current phase: Rapikan UX hasil resep dan mode langkah masak
+- Next phase: QUEUE-FB-4 Nutrition Database MVP
 
 ## Main Routes
 

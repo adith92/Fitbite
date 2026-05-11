@@ -4,14 +4,14 @@
 
 ### Release Lock
 
-- Version: V1.3.4
+- Version: V1.4
 - Project: fitbitedemo
 - Team: adith92s-projects
 - Production: https://fitbitedemo.vercel.app
 
-### Delivered (QUEUE-FB-2)
+### Delivered (QUEUE-FB-3)
 
-- Wizard `/wizard` menggunakan ingredient box terstruktur (nama, jumlah, satuan).
-- Auto-add baris bahan berikutnya aktif saat baris terakhir terisi.
-- Autocomplete bahan lokal dan autocorrect typo bahan Indonesia aktif.
-- Tombol CTA tetap singkat `Cek Menu` dan terhubung ke `POST /api/ai/pantry-wizard`.
+- Recipe result card lebih rapi dengan tags program.
+- Menambahkan mode langkah masak bertahap di hasil recipe.
+- Menambahkan ringkasan nutrisi dan kontribusi makro harian yang lebih jelas.
+- Action buttons tetap tersedia: Masak, Simpan, Pesan Catering.

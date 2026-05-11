@@ -105,6 +105,8 @@ export default function WizardPage() {
   const [activeSuggestId, setActiveSuggestId] = useState<string | null>(null);
   const [aiStatus, setAiStatus] = useState<AiHealthStatus>("fallback_local");
   const [aiMessage, setAiMessage] = useState("Memeriksa status AI...");
+  const [cookingIndex, setCookingIndex] = useState<number | null>(null);
+  const [activeStepByRecipe, setActiveStepByRecipe] = useState<Record<string, number>>({});
 
   const filledRows = useMemo(
     () => ingredients.filter((item) => item.name.trim() && item.quantity.trim()),
@@ -195,6 +197,8 @@ export default function WizardPage() {
       }
 
       setResult(payload.data);
+      setCookingIndex(null);
+      setActiveStepByRecipe({});
       if (payload.data.source === "fallback") {
         setAiStatus("fallback_local");
       }
@@ -204,6 +208,19 @@ export default function WizardPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  function startCooking(recipeTitle: string, recipeIndex: number) {
+    setCookingIndex(recipeIndex);
+    setActiveStepByRecipe((prev) => ({ ...prev, [recipeTitle]: 0 }));
+  }
+
+  function nextCookingStep(recipeTitle: string, maxStep: number) {
+    setActiveStepByRecipe((prev) => {
+      const current = prev[recipeTitle] ?? 0;
+      const next = Math.min(current + 1, maxStep - 1);
+      return { ...prev, [recipeTitle]: next };
+    });
   }
 
   return (
@@ -326,22 +343,51 @@ export default function WizardPage() {
               <p style={styles.muted}>Bahan terkoreksi: {result.corrected_ingredients.join(", ")}</p>
 
               <div style={styles.recipeList}>
-                {result.recipe_options.map((recipe) => (
+                {result.recipe_options.map((recipe, recipeIndex) => (
                   <article key={recipe.title} style={styles.recipeCard}>
                     <h3>{recipe.title}</h3>
                     <p style={styles.muted}>{recipe.description}</p>
-                    <p><b>Program:</b> {recipe.program_tags.join(", ")}</p>
+                    <div style={styles.chipRow}>
+                      {recipe.program_tags.map((tag) => (
+                        <span key={`${recipe.title}-${tag}`} style={styles.infoChip}>{tag}</span>
+                      ))}
+                    </div>
                     <p><b>Waktu:</b> {recipe.cooking_time_minutes} menit • <b>Tingkat:</b> {recipe.difficulty}</p>
                     <p><b>Bahan utama:</b> {recipe.ingredients_used.join(", ")}</p>
                     <p><b>Tambahan:</b> {recipe.additional_ingredients.join(", ")}</p>
-                    <p><b>Nutrisi (estimasi):</b> {recipe.nutrition.calories} kcal | P {recipe.nutrition.protein_g}g | C {recipe.nutrition.carbs_g}g | F {recipe.nutrition.fat_g}g | Fiber {recipe.nutrition.fiber_g}g</p>
-                    <p><b>Kontribusi harian:</b> Kalori {recipe.daily_contribution.calories_percent}% • Protein {recipe.daily_contribution.protein_percent}% • Karbo {recipe.daily_contribution.carbs_percent}% • Lemak {recipe.daily_contribution.fat_percent}%</p>
-                    <ol>
-                      {recipe.steps.map((stepText, idx) => <li key={`${recipe.title}-${idx}`}>{stepText}</li>)}
-                    </ol>
+                    <div style={styles.metricsGrid}>
+                      <div style={styles.metricItem}><b>{recipe.nutrition.calories}</b><span>kcal</span></div>
+                      <div style={styles.metricItem}><b>{recipe.nutrition.protein_g}g</b><span>protein</span></div>
+                      <div style={styles.metricItem}><b>{recipe.nutrition.carbs_g}g</b><span>karbo</span></div>
+                      <div style={styles.metricItem}><b>{recipe.nutrition.fat_g}g</b><span>lemak</span></div>
+                      <div style={styles.metricItem}><b>{recipe.nutrition.fiber_g}g</b><span>fiber</span></div>
+                    </div>
+                    <p style={styles.muted}><b>Kontribusi harian (estimasi):</b> Kalori {recipe.daily_contribution.calories_percent}% • Protein {recipe.daily_contribution.protein_percent}% • Karbo {recipe.daily_contribution.carbs_percent}% • Lemak {recipe.daily_contribution.fat_percent}%</p>
+                    <div style={styles.cookingModeBox}>
+                      <div style={styles.rowHead}>
+                        <b>Mode Masak Bertahap</b>
+                        <button style={styles.ghostBtn} onClick={() => startCooking(recipe.title, recipeIndex)}>Mulai</button>
+                      </div>
+                      <ol>
+                        {recipe.steps.map((stepText, idx) => {
+                          const activeStep = activeStepByRecipe[recipe.title] ?? -1;
+                          const isActive = cookingIndex === recipeIndex && idx === activeStep;
+                          return (
+                            <li key={`${recipe.title}-${idx}`} style={isActive ? styles.activeStep : undefined}>
+                              {stepText}
+                            </li>
+                          );
+                        })}
+                      </ol>
+                      {cookingIndex === recipeIndex ? (
+                        <button style={styles.actionBtn} onClick={() => nextCookingStep(recipe.title, recipe.steps.length)}>
+                          Langkah Berikutnya
+                        </button>
+                      ) : null}
+                    </div>
                     <p><b>Rekomendasi catering:</b> {recipe.catering_recommendation}</p>
                     <div style={styles.navRow}>
-                      <button style={styles.ghostBtn}>Masak</button>
+                      <button style={styles.ghostBtn} onClick={() => startCooking(recipe.title, recipeIndex)}>Masak</button>
                       <button style={styles.ghostBtn}>Simpan</button>
                       <button style={styles.actionBtn}>Pesan Catering</button>
                     </div>
@@ -393,6 +439,11 @@ const styles: Record<string, React.CSSProperties> = {
   hintBtn: { marginTop: 6, border: 0, background: "transparent", color: "#0369a1", fontWeight: 700, cursor: "pointer", padding: 0 },
   recipeList: { display: "grid", gap: 12, marginTop: 12 },
   recipeCard: { border: "1px solid #e2e8f0", borderRadius: 14, padding: 14, background: "#f8fafc" },
+  infoChip: { border: "1px solid #cbd5e1", borderRadius: 999, padding: "6px 10px", fontWeight: 700, fontSize: 12, background: "#fff" },
+  metricsGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 8, margin: "10px 0" },
+  metricItem: { border: "1px solid #e2e8f0", background: "#fff", borderRadius: 10, padding: "8px 10px", display: "grid", gap: 2 },
+  cookingModeBox: { border: "1px dashed #cbd5e1", borderRadius: 10, padding: 10, margin: "10px 0" },
+  activeStep: { background: "#dcfce7", borderRadius: 6, padding: "4px 6px" },
 };
 
 function aiStatusLabel(status: AiHealthStatus) {

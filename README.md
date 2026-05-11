@@ -4,7 +4,7 @@ Fitbite adalah aplikasi healthy food-tech untuk Indonesia: body check, nutrition
 
 ## Current Version
 
-V1.3.4 - Ingredient Box Wizard
+V1.4 - Pantry and Recipe MVP
 
 ## Main Routes
 
@@ -38,4 +38,5 @@ npm run dev
 
 - Wizard memakai ingredient cards terstruktur: nama bahan, jumlah, dan satuan.
 - Status AI di wizard membedakan: AI aktif, missing env, provider error, dan fallback local.
+- Hasil recipe punya mode langkah masak bertahap + ringkasan nutrisi estimasi.
 - Nutrisi adalah estimasi, bukan saran medis.

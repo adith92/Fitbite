@@ -17,6 +17,32 @@ Semua perubahan penting project Fitbite dicatat di file ini.
 
 ---
 
+## V1.4 - Pantry and Recipe MVP
+
+Tanggal: 2026-05-11
+
+Added:
+
+- Menambahkan mode masak bertahap pada hasil recipe di `/wizard`.
+- Menambahkan tampilan metrics nutrisi yang lebih ringkas per recipe card.
+- Menambahkan tampilan tags program agar opsi menu lebih cepat dipahami.
+
+Changed:
+
+- Merapikan UX hasil `Cek Menu` agar fokus ke aksi user: masak, simpan, atau pesan catering.
+- Menyetel release lock dokumen ke milestone QUEUE-FB-3.
+
+Fixed:
+
+- Alur hasil recipe tetap aman saat sumber data berasal dari fallback/local.
+- Build tetap bersih setelah peningkatan UI result wizard.
+
+Pending:
+
+- Lanjut ke QUEUE-FB-4: Nutrition Database MVP.
+
+---
+
 ## V1.3.4 - Ingredient Box Wizard
 
 Tanggal: 2026-05-11
