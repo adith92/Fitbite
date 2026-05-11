@@ -17,6 +17,35 @@ Semua perubahan penting project Fitbite dicatat di file ini.
 
 ---
 
+## V1.3 - AI Pantry Wizard and OpenRouter Integration Base
+
+Tanggal: 2026-05-11
+
+Added:
+
+- Menambahkan API route `POST /api/ai/pantry-wizard` di `app/api/ai/pantry-wizard/route.ts`.
+- Menambahkan halaman multi-step wizard di `app/wizard/page.tsx`.
+- Menambahkan `docs/AI_WIZARD_PLAN.md` dan `docs/RELEASE_LOG.md`.
+- Menambahkan shortcut route `/wizard` pada landing page demo.
+
+Changed:
+
+- Memperbarui `README.md`, `PROJECT_INDEX.md`, dan `AI_README.md` ke konteks V1.3.
+- Menyelaraskan alur dokumen agar fokus ke AI wizard readiness dan deployment.
+
+Fixed:
+
+- Menyediakan fallback lokal ketika env AI belum tersedia atau request OpenRouter gagal.
+- Integrasi API key dipastikan server-side only (tanpa expose ke frontend).
+- Build tetap kompatibel dan siap deploy Vercel.
+
+Pending:
+
+- Validasi hasil AI dengan dataset resep yang lebih kaya.
+- Tambahkan persistensi histori wizard per user.
+
+---
+
 ## V1.2.1 - Repository Indexing and Build Cleanup
 
 Tanggal: 2026-05-11

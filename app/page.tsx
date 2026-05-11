@@ -108,6 +108,7 @@ export default function HomePage() {
             <a href="/body-check">/body-check</a>
             <a href="/ingredients">/ingredients</a>
             <a href="/admin">/admin</a>
+            <a href="/wizard">/wizard</a>
           </div>
         </section>
       </section>
@@ -157,7 +158,7 @@ const styles: Record<string, React.CSSProperties> = {
   plan: { background: "white", borderRadius: 34, padding: 28, marginBottom: 44 },
   planGrid: { display: "flex", flexWrap: "wrap", gap: 12 },
   quickRoutes: { background: "white", borderRadius: 34, padding: 28, marginBottom: 44 },
-  quickRouteGrid: { display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 12, fontWeight: 800 },
+  quickRouteGrid: { display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 12, fontWeight: 800 },
 };
 
 const css = `
