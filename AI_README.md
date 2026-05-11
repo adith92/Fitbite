@@ -7,17 +7,16 @@ Mulai dari file ini jika kamu AI assistant yang bekerja di repo Fitbite.
 1. PROJECT_INDEX.md
 2. docs/PROJECT_CONTEXT_PROMPT.md
 3. docs/PROJECT_PLAN.md
-4. docs/AI_WIZARD_PLAN.md
-5. docs/FITBITE_CHANGELOG.md
-6. README.md
+4. docs/FITBITE_CHANGELOG.md
+5. README.md
 
 ## Current Version
 
-V1.3.2
+V1.3.3
 
 ## Current Mission
 
-Menjaga Ingredient Box Wizard + AI Menu Check tetap stabil, aman (secret only on server), dan deployable di Vercel.
+Stabilkan status AI aktif/fallback di production dan pastikan flow pantry wizard tetap aman.
 
 ## Rules
 

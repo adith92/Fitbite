@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type IngredientItem = {
   id: string;
@@ -40,6 +40,8 @@ type WizardApiData = {
   corrected_ingredients: string[];
   recipe_options: RecipeOption[];
 };
+
+type AiHealthStatus = "ai_aktif" | "missing_env" | "provider_error" | "fallback_local";
 
 const PROGRAMS = ["Diet", "Cutting", "Bulking", "Maintain", "Healthy Daily"];
 const PREFERENCES = ["Halal", "Pedas", "Cepat", "Low oil", "High protein", "No seafood"];
@@ -101,6 +103,8 @@ export default function WizardPage() {
   const [error, setError] = useState("");
   const [result, setResult] = useState<WizardApiData | null>(null);
   const [activeSuggestId, setActiveSuggestId] = useState<string | null>(null);
+  const [aiStatus, setAiStatus] = useState<AiHealthStatus>("fallback_local");
+  const [aiMessage, setAiMessage] = useState("Memeriksa status AI...");
 
   const filledRows = useMemo(
     () => ingredients.filter((item) => item.name.trim() && item.quantity.trim()),
@@ -118,6 +122,27 @@ export default function WizardPage() {
         unit: item.unit,
       }));
   }, [ingredients]);
+
+  useEffect(() => {
+    let mounted = true;
+    async function checkAiHealth() {
+      try {
+        const response = await fetch("/api/ai/health", { cache: "no-store" });
+        const payload = (await response.json()) as { status?: AiHealthStatus; message?: string };
+        if (!mounted) return;
+        setAiStatus(payload.status || "provider_error");
+        setAiMessage(payload.message || "Status AI tidak diketahui.");
+      } catch {
+        if (!mounted) return;
+        setAiStatus("provider_error");
+        setAiMessage("Gagal cek status AI. Fallback lokal tetap tersedia.");
+      }
+    }
+    void checkAiHealth();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   function updateIngredient(id: string, key: keyof IngredientItem, value: string) {
     setIngredients((prev) => {
@@ -170,6 +195,9 @@ export default function WizardPage() {
       }
 
       setResult(payload.data);
+      if (payload.data.source === "fallback") {
+        setAiStatus("fallback_local");
+      }
       setStep(4);
     } catch {
       setError("Proses cek menu gagal. Coba lagi sebentar.");
@@ -186,6 +214,9 @@ export default function WizardPage() {
           <a href="/" style={styles.backLink}>← Kembali</a>
           <h1 style={styles.title}>AI Pantry Wizard</h1>
           <p style={styles.subtitle}>Buat rekomendasi menu sehat dari bahan yang kamu punya di rumah.</p>
+          <p style={{ ...styles.aiBadge, ...aiBadgeStyle(aiStatus) }}>
+            {aiStatusLabel(aiStatus)} • {aiMessage}
+          </p>
         </header>
 
         <div style={styles.stepBar}>{[1, 2, 3, 4].map((s) => <span key={s} style={{ ...styles.stepDot, opacity: s <= step ? 1 : 0.35 }}>{s}</span>)}</div>
@@ -337,6 +368,7 @@ const styles: Record<string, React.CSSProperties> = {
   backLink: { textDecoration: "none", fontWeight: 700, color: "#0369a1" },
   title: { fontSize: 40, margin: "10px 0 4px" },
   subtitle: { color: "#475569", lineHeight: 1.6 },
+  aiBadge: { display: "inline-block", marginTop: 8, padding: "8px 10px", borderRadius: 10, fontWeight: 700, fontSize: 13 },
   stepBar: { display: "flex", gap: 10, marginBottom: 16 },
   stepDot: { width: 34, height: 34, borderRadius: 999, display: "grid", placeItems: "center", background: "#0f172a", color: "#fff", fontWeight: 800 },
   card: { background: "#fff", border: "1px solid #e2e8f0", borderRadius: 20, padding: 20, boxShadow: "0 14px 34px rgba(15,23,42,.08)" },
@@ -362,6 +394,20 @@ const styles: Record<string, React.CSSProperties> = {
   recipeList: { display: "grid", gap: 12, marginTop: 12 },
   recipeCard: { border: "1px solid #e2e8f0", borderRadius: 14, padding: 14, background: "#f8fafc" },
 };
+
+function aiStatusLabel(status: AiHealthStatus) {
+  if (status === "ai_aktif") return "AI aktif";
+  if (status === "missing_env") return "Missing env";
+  if (status === "provider_error") return "Provider error";
+  return "Fallback local";
+}
+
+function aiBadgeStyle(status: AiHealthStatus): React.CSSProperties {
+  if (status === "ai_aktif") return { background: "#dcfce7", color: "#166534" };
+  if (status === "missing_env") return { background: "#fee2e2", color: "#991b1b" };
+  if (status === "provider_error") return { background: "#ffedd5", color: "#9a3412" };
+  return { background: "#e2e8f0", color: "#334155" };
+}
 
 const css = `
   ol { margin: 8px 0 0; padding-left: 18px; }

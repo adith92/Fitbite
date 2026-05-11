@@ -17,6 +17,30 @@ Semua perubahan penting project Fitbite dicatat di file ini.
 
 ---
 
+## V1.3.3 - Fix OpenRouter Production AI Fallback
+
+Tanggal: 2026-05-11
+
+Added:
+
+- Menambahkan endpoint `GET /api/ai/health`.
+- Menampilkan badge status AI di halaman `/wizard`.
+
+Changed:
+
+- Wizard sekarang bisa membedakan status: AI aktif, missing env, provider error, fallback local.
+- Update release docs ke milestone QUEUE-FB-1.
+
+Fixed:
+
+- Fallback local tetap aman saat OpenRouter gagal atau env belum lengkap.
+
+Pending:
+
+- Lanjut ke QUEUE-FB-2: Ingredient Box Wizard refinement.
+
+---
+
 ## V1.3.2 - Ingredient Box Wizard and AI Menu Check
 
 Tanggal: 2026-05-11

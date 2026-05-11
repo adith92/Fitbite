@@ -4,7 +4,7 @@ Fitbite adalah aplikasi healthy food-tech untuk Indonesia: body check, nutrition
 
 ## Current Version
 
-V1.3.2 - Ingredient Box Wizard and AI Menu Check
+V1.3.3 - Fix OpenRouter Production AI Fallback
 
 ## Main Routes
 
@@ -14,15 +14,9 @@ V1.3.2 - Ingredient Box Wizard and AI Menu Check
 - `/admin`
 - `/wizard`
 
-## Wizard Highlights
+## API Routes
 
-- Input bahan pakai kartu terstruktur: nama, jumlah, satuan.
-- Autocomplete lokal + autocorrect typo umum Indonesia.
-- Tombol singkat: `Cek Menu`.
-- Hasil menampilkan opsi resep, langkah masak, dan nutrisi estimasi.
-
-## API Route
-
+- `GET /api/ai/health`
 - `POST /api/ai/pantry-wizard`
 
 ## How To Run
@@ -40,10 +34,7 @@ npm run dev
 - Framework: Next.js
 - Build command: `npm run build`
 
-## Docs
+## Notes
 
-- `PROJECT_INDEX.md`
-- `AI_README.md`
-- `docs/RELEASE_LOG.md`
-- `docs/AI_WIZARD_PLAN.md`
-- `docs/FITBITE_CHANGELOG.md`
+- Status AI di wizard sekarang membedakan: AI aktif, missing env, provider error, dan fallback local.
+- Nutrisi adalah estimasi, bukan saran medis.

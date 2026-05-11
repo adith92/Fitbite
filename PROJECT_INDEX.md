@@ -1,13 +1,13 @@
 # Fitbite Project Index
 
-Version: V1.3.2
+Version: V1.3.3
 
 ## 🔒 Production Release Lock
 
 Release utama saat ini:
 
 ```txt
-Version     : V1.3.2
+Version     : V1.3.3
 Project     : fitbitedemo
 Team        : adith92s-projects
 Production  : https://fitbitedemo.vercel.app
@@ -19,9 +19,9 @@ Fitbite adalah aplikasi healthy food-tech Indonesia yang menggabungkan body chec
 
 ## Current Status
 
-- Current version: V1.3.2 - Ingredient Box Wizard and AI Menu Check
-- Current phase: Serious AI Pantry Wizard flow
-- Next phase: persistensi histori wizard + validasi nutrisi lanjutan
+- Current version: V1.3.3 - Fix OpenRouter Production AI Fallback
+- Current phase: Stabilkan status AI active/fallback
+- Next phase: QUEUE-FB-2 Ingredient Box Wizard
 
 ## Main Routes
 
@@ -31,8 +31,9 @@ Fitbite adalah aplikasi healthy food-tech Indonesia yang menggabungkan body chec
 - `/admin`
 - `/wizard` (ingredient box wizard)
 
-## API Route
+## API Routes
 
+- `GET /api/ai/health`
 - `POST /api/ai/pantry-wizard`
 
 ## Important Files
@@ -41,17 +42,10 @@ Fitbite adalah aplikasi healthy food-tech Indonesia yang menggabungkan body chec
 - `AI_README.md`
 - `README.md`
 - `docs/RELEASE_LOG.md`
-- `docs/AI_WIZARD_PLAN.md`
 - `docs/FITBITE_CHANGELOG.md`
-- `app/wizard/page.tsx`
+- `app/api/ai/health/route.ts`
 - `app/api/ai/pantry-wizard/route.ts`
-
-## Architecture
-
-- Frontend: Next.js App Router + TypeScript
-- AI Adapter: OpenRouter via server route
-- Fallback: local recipe response saat env tidak tersedia / provider gagal
-- Deploy: Vercel `fitbitedemo`
+- `app/wizard/page.tsx`
 
 ## Build and Deploy
 
