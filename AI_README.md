@@ -12,11 +12,11 @@ Mulai dari file ini jika kamu AI assistant yang bekerja di repo Fitbite.
 
 ## Current Version
 
-V1.4
+V1.4.1
 
 ## Current Mission
 
-Selesaikan Pantry and Recipe MVP: hasil resep rapi, mode masak bertahap, dan nutrisi estimasi yang mudah dibaca.
+Bangun Nutrition Table MVP: estimasi nutrisi berdasarkan bahan dan quantity untuk memperkuat hasil AI menu.
 
 ## Rules
 

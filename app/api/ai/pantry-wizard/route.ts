@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { buildPantryWizardPrompt, callOpenRouter } from "@/lib/ai/openrouter";
+import { estimateDailyContribution, estimateNutritionFromIngredients, type IngredientEntry } from "@/lib/nutrition-db";
 
 type IngredientObject = {
   name?: string;
@@ -74,6 +75,32 @@ function normalizeIngredients(input: PantryWizardPayload["ingredients"]): string
   return [];
 }
 
+function parseStructuredIngredients(input: PantryWizardPayload["ingredients"]): IngredientEntry[] {
+  if (!input) return [];
+  if (!Array.isArray(input)) return [];
+
+  if (input.every((item) => typeof item === "string")) {
+    return (input as string[])
+      .map((raw) => {
+        const text = raw.trim();
+        const matched = text.match(/^(.*?)(?:\s+(\d+(?:[.,]\d+)?))?(?:\s+([a-zA-Z]+))?$/);
+        const name = matched?.[1]?.trim() || text;
+        const qty = matched?.[2] ? Number(matched[2].replace(",", ".")) : undefined;
+        const unit = matched?.[3]?.trim().toLowerCase();
+        return { name, quantity: Number.isFinite(qty) ? qty : undefined, unit };
+      })
+      .filter((x) => x.name);
+  }
+
+  return (input as IngredientObject[])
+    .map((item) => ({
+      name: (item.name || "").trim(),
+      quantity: item.quantity ? Number(item.quantity) : undefined,
+      unit: (item.unit || "").trim().toLowerCase() || undefined,
+    }))
+    .filter((x) => x.name);
+}
+
 function fallbackResult(ingredients: string[], goal: string): PantryResponse {
   const correctedMap: Record<string, string> = {
     telor: "telur",
@@ -89,6 +116,16 @@ function fallbackResult(ingredients: string[], goal: string): PantryResponse {
     return correctedMap[lower] || lower;
   });
 
+  const structured = parseStructuredIngredients(correctedIngredients);
+  const totalNutrition = estimateNutritionFromIngredients(structured);
+  const secondNutrition = {
+    calories: Math.round(totalNutrition.calories * 0.85),
+    protein_g: Number((totalNutrition.protein_g * 0.82).toFixed(1)),
+    carbs_g: Number((totalNutrition.carbs_g * 0.9).toFixed(1)),
+    fat_g: Number((totalNutrition.fat_g * 0.8).toFixed(1)),
+    fiber_g: Number((totalNutrition.fiber_g * 0.9).toFixed(1)),
+  };
+
   return {
     source: "fallback",
     warning: "Mode fallback aktif. API AI tidak tersedia, hasil menggunakan template lokal.",
@@ -102,19 +139,8 @@ function fallbackResult(ingredients: string[], goal: string): PantryResponse {
         difficulty: "Mudah",
         ingredients_used: correctedIngredients.slice(0, 4),
         additional_ingredients: ["bawang putih", "garam", "lada"],
-        nutrition: {
-          calories: 510,
-          protein_g: 38,
-          carbs_g: 46,
-          fat_g: 14,
-          fiber_g: 6,
-        },
-        daily_contribution: {
-          calories_percent: 27,
-          protein_percent: 31,
-          carbs_percent: 21,
-          fat_percent: 19,
-        },
+        nutrition: totalNutrition,
+        daily_contribution: estimateDailyContribution(totalNutrition),
         steps: [
           "Siapkan bahan dan cuci sayur sampai bersih.",
           "Tumis bawang putih, lalu masukkan protein utama.",
@@ -131,19 +157,8 @@ function fallbackResult(ingredients: string[], goal: string): PantryResponse {
         difficulty: "Mudah",
         ingredients_used: correctedIngredients.slice(0, 3),
         additional_ingredients: ["cabai", "kecap rendah gula"],
-        nutrition: {
-          calories: 430,
-          protein_g: 26,
-          carbs_g: 42,
-          fat_g: 12,
-          fiber_g: 8,
-        },
-        daily_contribution: {
-          calories_percent: 23,
-          protein_percent: 22,
-          carbs_percent: 20,
-          fat_percent: 16,
-        },
+        nutrition: secondNutrition,
+        daily_contribution: estimateDailyContribution(secondNutrition),
         steps: [
           "Potong tempe kotak kecil, lalu tumis hingga kecokelatan.",
           "Masukkan bayam dan sedikit air, aduk cepat.",
@@ -152,6 +167,31 @@ function fallbackResult(ingredients: string[], goal: string): PantryResponse {
         catering_recommendation: "Cocok jadi paket catering hemat harian.",
       },
     ],
+  };
+}
+
+function applyEstimatedNutrition(data: PantryResponse, entries: IngredientEntry[]) {
+  if (!entries.length || !data.recipe_options.length) return data;
+
+  const base = estimateNutritionFromIngredients(entries);
+  return {
+    ...data,
+    recipe_options: data.recipe_options.map((recipe, idx) => {
+      const factor = idx === 0 ? 1 : 0.85;
+      const estimated = {
+        calories: Math.round(base.calories * factor),
+        protein_g: Number((base.protein_g * factor).toFixed(1)),
+        carbs_g: Number((base.carbs_g * factor).toFixed(1)),
+        fat_g: Number((base.fat_g * factor).toFixed(1)),
+        fiber_g: Number((base.fiber_g * factor).toFixed(1)),
+      };
+
+      return {
+        ...recipe,
+        nutrition: estimated,
+        daily_contribution: estimateDailyContribution(estimated),
+      };
+    }),
   };
 }
 
@@ -173,6 +213,7 @@ export async function POST(request: Request) {
     const body = (await request.json()) as PantryWizardPayload;
     const goal = body.goal?.trim() || "Healthy Daily";
     const ingredients = normalizeIngredients(body.ingredients);
+    const structuredIngredients = parseStructuredIngredients(body.ingredients);
     const preferences = Array.isArray(body.preferences) ? body.preferences.map(String) : [];
 
     if (!ingredients.length) {
@@ -196,7 +237,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ ok: true, data: fallbackResult(ingredients, goal) });
     }
 
-    return NextResponse.json({ ok: true, data: parsed });
+    return NextResponse.json({ ok: true, data: applyEstimatedNutrition(parsed, structuredIngredients) });
   } catch {
     return NextResponse.json({ ok: true, data: fallbackResult([], "Healthy Daily") });
   }

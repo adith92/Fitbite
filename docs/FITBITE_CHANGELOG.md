@@ -17,6 +17,31 @@ Semua perubahan penting project Fitbite dicatat di file ini.
 
 ---
 
+## V1.4.1 - Nutrition Table MVP
+
+Tanggal: 2026-05-11
+
+Added:
+
+- Menambahkan file `lib/nutrition-db.ts` untuk tabel nutrisi lokal bahan Indonesia.
+- Menambahkan konversi satuan (`gram`, `kg`, `pcs`, `buah`, `sdm`, `sdt`, `ml`, `liter`, `porsi`, `ikat`) untuk estimasi nutrisi.
+
+Changed:
+
+- API `app/api/ai/pantry-wizard/route.ts` kini menghitung estimasi nutrisi dari input bahan + quantity.
+- Dokumentasi release lock diubah ke milestone QUEUE-FB-4.
+
+Fixed:
+
+- Daily macro contribution tidak lagi statis pada fallback; sekarang mengikuti estimasi dari input bahan user.
+- Flow tetap aman saat OpenRouter gagal (fallback lokal tetap aktif).
+
+Pending:
+
+- Lanjut ke QUEUE-FB-5: Catering Order Flow MVP.
+
+---
+
 ## V1.4 - Pantry and Recipe MVP
 
 Tanggal: 2026-05-11
