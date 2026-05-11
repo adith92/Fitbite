@@ -41,6 +41,7 @@ export default function HomePage() {
             <div style={styles.ctaRow}>
               <a style={styles.primaryBtn} href="#demo">Coba Demo</a>
               <a style={styles.secondaryBtn} href="#admin">Lihat Admin</a>
+              <a style={styles.secondaryBtn} href="/wizard">Buka AI Wizard</a>
             </div>
           </div>
           <div className="phoneFloat" style={styles.phone}>

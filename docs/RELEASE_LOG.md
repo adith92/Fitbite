@@ -4,19 +4,15 @@
 
 ### Release Lock
 
-- Version: V1.3
+- Version: V1.3.2
 - Project: fitbitedemo
 - Team: adith92s-projects
 - Production: https://fitbitedemo.vercel.app
 
 ### Delivered
 
-- Added API route `POST /api/ai/pantry-wizard`
-- Added UI route `/wizard` (multi-step pantry wizard)
-- Added OpenRouter env-based integration with safe fallback
-- Updated project docs and changelog for AI wizard release
-
-### Notes
-
-- API key disimpan di Vercel env only.
-- Tidak ada secret yang disimpan di repo.
+- Ingredient Box Wizard di `/wizard` (nama, jumlah, satuan)
+- Local autocomplete dan autocorrect typo bahan Indonesia
+- API `/api/ai/pantry-wizard` mendukung payload string/array/object-array
+- Tombol `Cek Menu` terhubung ke backend AI route
+- Fallback tetap aktif ketika env AI kosong atau provider gagal

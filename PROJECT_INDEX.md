@@ -1,28 +1,27 @@
 # Fitbite Project Index
 
-Version: V1.3
+Version: V1.3.2
 
 ## 🔒 Production Release Lock
 
-Release utama yang dijadikan acuan saat ini:
+Release utama saat ini:
 
 ```txt
-Version     : V1.3
+Version     : V1.3.2
 Project     : fitbitedemo
 Team        : adith92s-projects
-Vercel      : READY
 Production  : https://fitbitedemo.vercel.app
 ```
 
 ## Project Identity
 
-Fitbite adalah aplikasi healthy food-tech untuk Indonesia yang menggabungkan body check, nutrition target, pantry ingredient input, AI recipe recommendation, healthy catering order, admin dashboard, dan report bisnis.
+Fitbite adalah aplikasi healthy food-tech Indonesia yang menggabungkan body check, target nutrisi, pantry ingredient input, AI recipe recommendation, healthy catering order, admin dashboard, dan business report.
 
 ## Current Status
 
-- Current version: V1.3 - AI Pantry Wizard and OpenRouter Integration Base
-- Current phase: Wizard UI/API aktif dan aman untuk deploy
-- Next phase: customer core persistence + user history
+- Current version: V1.3.2 - Ingredient Box Wizard and AI Menu Check
+- Current phase: Serious AI Pantry Wizard flow
+- Next phase: persistensi histori wizard + validasi nutrisi lanjutan
 
 ## Main Routes
 
@@ -30,9 +29,9 @@ Fitbite adalah aplikasi healthy food-tech untuk Indonesia yang menggabungkan bod
 - `/body-check`
 - `/ingredients`
 - `/admin`
-- `/wizard` (multi-step AI Pantry Wizard)
+- `/wizard` (ingredient box wizard)
 
-## API Routes
+## API Route
 
 - `POST /api/ai/pantry-wizard`
 
@@ -42,8 +41,6 @@ Fitbite adalah aplikasi healthy food-tech untuk Indonesia yang menggabungkan bod
 - `AI_README.md`
 - `README.md`
 - `docs/RELEASE_LOG.md`
-- `docs/PROJECT_CONTEXT_PROMPT.md`
-- `docs/PROJECT_PLAN.md`
 - `docs/AI_WIZARD_PLAN.md`
 - `docs/FITBITE_CHANGELOG.md`
 - `app/wizard/page.tsx`
@@ -53,7 +50,7 @@ Fitbite adalah aplikasi healthy food-tech untuk Indonesia yang menggabungkan bod
 
 - Frontend: Next.js App Router + TypeScript
 - AI Adapter: OpenRouter via server route
-- Fallback: local recipe response saat env tidak tersedia
+- Fallback: local recipe response saat env tidak tersedia / provider gagal
 - Deploy: Vercel `fitbitedemo`
 
 ## Build and Deploy
@@ -63,18 +60,10 @@ npm install
 npm run build
 ```
 
-Deploy target:
-
-- `https://fitbitedemo.vercel.app`
-
-## AI/Codex Instructions
+## AI/Codex Rules
 
 - Jangan commit API key ke repo.
 - Jangan expose API key di frontend.
 - Simpan secret hanya di Vercel Environment Variables.
-- Semua klaim nutrisi harus berbentuk estimasi.
-- Update `docs/FITBITE_CHANGELOG.md` untuk setiap perubahan meaningful.
-
-## Indexing Note
-
-Repo ini harus dipilih dari ChatGPT GitHub connector melalui Configure Repositories. Jika masih Not indexed, pilih repo `adith92/Fitbite`, tunggu proses indexing, lalu refresh ChatGPT. Konteks utama ada di `PROJECT_INDEX.md`, `AI_README.md`, `docs/RELEASE_LOG.md`, dan `docs/PROJECT_CONTEXT_PROMPT.md`.
+- Copy user-facing pakai Bahasa Indonesia.
+- Nutrisi adalah estimasi, bukan diagnosis medis.

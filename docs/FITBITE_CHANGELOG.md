@@ -17,6 +17,34 @@ Semua perubahan penting project Fitbite dicatat di file ini.
 
 ---
 
+## V1.3.2 - Ingredient Box Wizard and AI Menu Check
+
+Tanggal: 2026-05-11
+
+Added:
+
+- Structured ingredient input cards dengan nama, quantity, dan unit.
+- Local autocomplete dan typo correction untuk bahan Indonesia.
+- Auto-add ingredient box baru saat baris terakhir sudah terisi.
+- Route `/wizard` terhubung ke `/api/ai/pantry-wizard`.
+- Tombol singkat `Cek Menu`.
+
+Changed:
+
+- Payload pantry wizard sekarang mendukung structured ingredients.
+- Landing page menambahkan CTA `Buka AI Wizard`.
+
+Fixed:
+
+- Fallback recipe tetap berjalan saat OpenRouter env kosong atau provider gagal.
+
+Pending:
+
+- Tingkatkan akurasi nutrisi dengan database nutrisi terverifikasi.
+- Tambah photo scan dan voice input di fase berikutnya.
+
+---
+
 ## V1.3 - AI Pantry Wizard and OpenRouter Integration Base
 
 Tanggal: 2026-05-11

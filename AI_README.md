@@ -13,11 +13,11 @@ Mulai dari file ini jika kamu AI assistant yang bekerja di repo Fitbite.
 
 ## Current Version
 
-V1.3
+V1.3.2
 
 ## Current Mission
 
-Menjaga AI Pantry Wizard tetap stabil, aman (secret only on server), dan deployable di Vercel.
+Menjaga Ingredient Box Wizard + AI Menu Check tetap stabil, aman (secret only on server), dan deployable di Vercel.
 
 ## Rules
 

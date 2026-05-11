@@ -1,170 +1,203 @@
 import { NextResponse } from "next/server";
+import { buildPantryWizardPrompt, callOpenRouter } from "@/lib/ai/openrouter";
+
+type IngredientObject = {
+  name?: string;
+  quantity?: string;
+  unit?: string;
+};
 
 type PantryWizardPayload = {
   goal?: string;
-  ingredients?: string;
-  allergies?: string;
-  budget?: string;
+  preferences?: string[];
+  ingredients?: string | string[] | IngredientObject[];
 };
 
-type PantryRecipe = {
-  name: string;
-  calories: number;
-  protein: number;
-  reason: string;
-  ingredients: string[];
-  steps: string[];
-};
-
-type PantryResult = {
+type PantryResponse = {
   source: "openrouter" | "fallback";
-  note: string;
-  recipes: PantryRecipe[];
+  warning?: string;
+  corrected_ingredients: string[];
+  recipe_options: Array<{
+    title: string;
+    description: string;
+    program_tags: string[];
+    cooking_time_minutes: number;
+    difficulty: string;
+    ingredients_used: string[];
+    additional_ingredients: string[];
+    nutrition: {
+      calories: number;
+      protein_g: number;
+      carbs_g: number;
+      fat_g: number;
+      fiber_g: number;
+    };
+    daily_contribution: {
+      calories_percent: number;
+      protein_percent: number;
+      carbs_percent: number;
+      fat_percent: number;
+    };
+    steps: string[];
+    catering_recommendation: string;
+  }>;
 };
 
-const fallbackRecipes: PantryRecipe[] = [
-  {
-    name: "Tumis Tempe Kangkung Protein Ringan",
-    calories: 420,
-    protein: 24,
-    reason: "Cocok untuk jaga kalori tetap terkendali dengan bahan lokal halal.",
-    ingredients: ["tempe", "kangkung", "bawang putih", "cabai", "kecap rendah gula"],
-    steps: [
-      "Tumis bawang putih dan cabai sampai harum.",
-      "Masukkan tempe potong dadu, tumis 3-4 menit.",
-      "Masukkan kangkung, aduk cepat sampai layu.",
-      "Tambahkan sedikit kecap rendah gula lalu sajikan.",
-    ],
-  },
-  {
-    name: "Ayam Bumbu Kuning + Nasi Merah",
-    calories: 520,
-    protein: 36,
-    reason: "Protein lebih tinggi, cocok untuk fase cutting/maintain.",
-    ingredients: ["dada ayam", "kunyit", "bawang merah", "bawang putih", "nasi merah"],
-    steps: [
-      "Haluskan bumbu kuning dan marinasi ayam.",
-      "Masak ayam hingga matang merata.",
-      "Sajikan dengan nasi merah dan lalapan.",
-    ],
-  },
-  {
-    name: "Tahu Telur Orak-Arik Sayur",
-    calories: 390,
-    protein: 22,
-    reason: "Budget-friendly dan tetap tinggi nutrisi harian.",
-    ingredients: ["tahu", "telur", "wortel", "daun bawang", "lada"],
-    steps: [
-      "Hancurkan tahu, lalu tumis bersama wortel.",
-      "Tuang telur kocok, aduk hingga set.",
-      "Tambahkan daun bawang dan lada lalu angkat.",
-    ],
-  },
-];
+function normalizeIngredients(input: PantryWizardPayload["ingredients"]): string[] {
+  if (!input) return [];
 
-function buildFallback(payload: PantryWizardPayload): PantryResult {
-  const goal = payload.goal || "Maintain";
-  const budget = payload.budget || "standar";
+  if (typeof input === "string") {
+    return input
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
+  if (Array.isArray(input) && input.every((item) => typeof item === "string")) {
+    return (input as string[]).map((item) => item.trim()).filter(Boolean);
+  }
+
+  if (Array.isArray(input)) {
+    return (input as IngredientObject[])
+      .map((item) => {
+        const name = (item.name || "").trim();
+        const quantity = (item.quantity || "").trim();
+        const unit = (item.unit || "").trim();
+        if (!name) return "";
+        if (quantity && unit) return `${name} ${quantity} ${unit}`;
+        if (quantity) return `${name} ${quantity}`;
+        return name;
+      })
+      .filter(Boolean);
+  }
+
+  return [];
+}
+
+function fallbackResult(ingredients: string[], goal: string): PantryResponse {
+  const correctedMap: Record<string, string> = {
+    telor: "telur",
+    cabe: "cabai",
+    nasih: "nasi",
+    "nasih merah": "nasi merah",
+    "ayam dada": "dada ayam",
+    brokolii: "brokoli",
+  };
+
+  const correctedIngredients = ingredients.map((item) => {
+    const lower = item.toLowerCase().trim();
+    return correctedMap[lower] || lower;
+  });
 
   return {
     source: "fallback",
-    note: `Mode fallback aktif. Rekomendasi estimasi untuk goal ${goal} dengan budget ${budget}.`,
-    recipes: fallbackRecipes,
+    warning: "Mode fallback aktif. API AI tidak tersedia, hasil menggunakan template lokal.",
+    corrected_ingredients: correctedIngredients,
+    recipe_options: [
+      {
+        title: "Ayam Tumis Nasi Merah Fitbite",
+        description: "Menu halal-first tinggi protein untuk kebutuhan harian sehat.",
+        program_tags: [goal, "Healthy Daily"],
+        cooking_time_minutes: 25,
+        difficulty: "Mudah",
+        ingredients_used: correctedIngredients.slice(0, 4),
+        additional_ingredients: ["bawang putih", "garam", "lada"],
+        nutrition: {
+          calories: 510,
+          protein_g: 38,
+          carbs_g: 46,
+          fat_g: 14,
+          fiber_g: 6,
+        },
+        daily_contribution: {
+          calories_percent: 27,
+          protein_percent: 31,
+          carbs_percent: 21,
+          fat_percent: 19,
+        },
+        steps: [
+          "Siapkan bahan dan cuci sayur sampai bersih.",
+          "Tumis bawang putih, lalu masukkan protein utama.",
+          "Masukkan sayur dan bumbui secukupnya.",
+          "Sajikan bersama nasi merah hangat.",
+        ],
+        catering_recommendation: "Bisa dijadikan menu Catering Cutting atau Maintain.",
+      },
+      {
+        title: "Tempe Bayam Protein Bowl",
+        description: "Pilihan hemat, tetap bergizi, cocok untuk meal prep.",
+        program_tags: [goal, "Diet"],
+        cooking_time_minutes: 20,
+        difficulty: "Mudah",
+        ingredients_used: correctedIngredients.slice(0, 3),
+        additional_ingredients: ["cabai", "kecap rendah gula"],
+        nutrition: {
+          calories: 430,
+          protein_g: 26,
+          carbs_g: 42,
+          fat_g: 12,
+          fiber_g: 8,
+        },
+        daily_contribution: {
+          calories_percent: 23,
+          protein_percent: 22,
+          carbs_percent: 20,
+          fat_percent: 16,
+        },
+        steps: [
+          "Potong tempe kotak kecil, lalu tumis hingga kecokelatan.",
+          "Masukkan bayam dan sedikit air, aduk cepat.",
+          "Tambahkan bumbu secukupnya, lalu sajikan.",
+        ],
+        catering_recommendation: "Cocok jadi paket catering hemat harian.",
+      },
+    ],
   };
 }
 
-function extractJson(raw: string): PantryResult | null {
-  const trimmed = raw.trim();
-  const first = trimmed.indexOf("{");
-  const last = trimmed.lastIndexOf("}");
-  if (first === -1 || last === -1 || last <= first) return null;
+function parseAiResult(aiData: unknown): PantryResponse | null {
+  if (!aiData || typeof aiData !== "object") return null;
+  const maybe = aiData as Partial<PantryResponse>;
+  if (!Array.isArray(maybe.corrected_ingredients)) return null;
+  if (!Array.isArray(maybe.recipe_options)) return null;
 
-  const slice = trimmed.slice(first, last + 1);
-  try {
-    const parsed = JSON.parse(slice) as PantryResult;
-    if (!parsed?.recipes || !Array.isArray(parsed.recipes)) return null;
-    return parsed;
-  } catch {
-    return null;
-  }
+  return {
+    source: "openrouter",
+    corrected_ingredients: maybe.corrected_ingredients,
+    recipe_options: maybe.recipe_options,
+  } as PantryResponse;
 }
 
 export async function POST(request: Request) {
   try {
-    const payload = (await request.json()) as PantryWizardPayload;
+    const body = (await request.json()) as PantryWizardPayload;
+    const goal = body.goal?.trim() || "Healthy Daily";
+    const ingredients = normalizeIngredients(body.ingredients);
+    const preferences = Array.isArray(body.preferences) ? body.preferences.map(String) : [];
+
+    if (!ingredients.length) {
+      return NextResponse.json({ ok: false, error: "ingredients is required" }, { status: 400 });
+    }
 
     const provider = process.env.AI_PROVIDER;
-    const apiKey = process.env.OPENROUTER_API_KEY;
-    const model = process.env.OPENROUTER_MODEL;
-    const siteUrl = process.env.OPENROUTER_SITE_URL || "https://fitbitedemo.vercel.app";
-    const appName = process.env.OPENROUTER_APP_NAME || "Fitbite";
-
-    if (provider !== "openrouter" || !apiKey || !model) {
-      return NextResponse.json(buildFallback(payload));
+    if (provider !== "openrouter") {
+      return NextResponse.json({ ok: true, data: fallbackResult(ingredients, goal) });
     }
 
-    const prompt = `Kamu adalah asisten nutrisi Fitbite untuk user Indonesia. Buat 3 rekomendasi resep halal-first dan bahan lokal. Semua angka nutrisi adalah estimasi, bukan klaim medis.
+    const prompt = buildPantryWizardPrompt({ ingredients, goal, preferences });
+    const aiResult = await callOpenRouter(prompt);
 
-Goal: ${payload.goal || "Maintain"}
-Bahan tersedia: ${payload.ingredients || "tidak disebutkan"}
-Alergi: ${payload.allergies || "tidak ada"}
-Budget: ${payload.budget || "standar"}
-
-Balas HANYA JSON valid dengan format:
-{
-  "source": "openrouter",
-  "note": "string",
-  "recipes": [
-    {
-      "name": "string",
-      "calories": number,
-      "protein": number,
-      "reason": "string",
-      "ingredients": ["string"],
-      "steps": ["string"]
-    }
-  ]
-}`;
-
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": siteUrl,
-        "X-Title": appName,
-      },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: "system", content: "Kamu ahli menu sehat Fitbite. Jawab ringkas dan terstruktur." },
-          { role: "user", content: prompt },
-        ],
-        temperature: 0.5,
-      }),
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      return NextResponse.json(buildFallback(payload));
+    if (!aiResult.ok) {
+      return NextResponse.json({ ok: true, data: fallbackResult(ingredients, goal) });
     }
 
-    const data = (await response.json()) as {
-      choices?: Array<{ message?: { content?: string } }>;
-    };
-
-    const content = data.choices?.[0]?.message?.content;
-    if (!content) {
-      return NextResponse.json(buildFallback(payload));
-    }
-
-    const parsed = extractJson(content);
+    const parsed = parseAiResult(aiResult.data);
     if (!parsed) {
-      return NextResponse.json(buildFallback(payload));
+      return NextResponse.json({ ok: true, data: fallbackResult(ingredients, goal) });
     }
 
-    return NextResponse.json(parsed);
+    return NextResponse.json({ ok: true, data: parsed });
   } catch {
-    return NextResponse.json(buildFallback({}));
+    return NextResponse.json({ ok: true, data: fallbackResult([], "Healthy Daily") });
   }
 }

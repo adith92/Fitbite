@@ -1,25 +1,20 @@
 # Fitbite AI Wizard Plan
 
-Version target: V1.3
+Version target: V1.3.2
 
 ## Goal
 
-Build AI-powered pantry wizard inside Fitbite.
+Membuat AI Pantry Wizard yang serius dengan input bahan terstruktur dan output menu yang actionable.
 
-## Scope V1.3
+## Scope V1.3.2
 
-- Route UI: `/wizard` (multi-step flow)
+- Route UI: `/wizard`
 - API route: `POST /api/ai/pantry-wizard`
-- Integrasi OpenRouter via server-side env
-- Fallback lokal jika env belum ada / API gagal
-
-## Wizard Flow
-
-1. User pilih goal program.
-2. User input bahan dapur.
-3. User isi alergi dan budget.
-4. Wizard memanggil API route.
-5. User menerima 3 rekomendasi resep + langkah masak + nutrisi estimasi.
+- Input bahan pakai ingredient box (nama, jumlah, satuan)
+- Local autocomplete + typo autocorrect
+- Auto-add row saat baris terakhir sudah terisi
+- CTA utama: `Cek Menu`
+- Output: opsi resep + langkah masak + nutrisi estimasi
 
 ## Security Rules
 
@@ -27,14 +22,8 @@ Build AI-powered pantry wizard inside Fitbite.
 - API key tidak boleh di-commit ke repo.
 - API key hanya disimpan di Vercel Environment Variables.
 
-## Output Structure
-
-- `source` (`openrouter` atau `fallback`)
-- `note`
-- `recipes[]`: nama, kalori, protein, reason, ingredients, steps
-
 ## Next Steps
 
 - Persistensi histori wizard per user
-- Validasi input lebih ketat
-- Mode meal plan mingguan
+- Integrasi database nutrisi terverifikasi
+- Photo scan dan voice input
