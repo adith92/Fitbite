@@ -6,13 +6,48 @@ Semua perubahan penting project Fitbite dicatat di file ini.
 
 - V1.0 = versi awal
 - V1.1 = update dokumentasi dan project brain
-- V1.2 = clean repo dan deploy base
+- V1.2 = interactive demo mockup and deploy preparation
 - V1.3 = customer core
 - V1.4 = pantry and recipe MVP
 - V1.5 = catering order MVP
 - V1.6 = admin dashboard MVP
 - V1.7 = reports
 - V2.0 = AI and automation
+
+---
+
+## V1.2 - Interactive Demo Mockup and Deploy Preparation
+
+Tanggal: 2026-05-11
+
+Added:
+
+- Membuat demo mockup interaktif di `app/page.tsx`.
+- Menambahkan hero animated mockup.
+- Menambahkan program selector untuk Diet, Cutting, Bulking, Maintain.
+- Menambahkan pantry ingredient input mockup.
+- Menambahkan recipe cards mockup.
+- Menambahkan action button Pesan Versi Catering.
+- Menambahkan toast mockup untuk order masuk dashboard dan Telegram.
+- Menambahkan admin dashboard preview.
+- Menambahkan future plan chips.
+
+Changed:
+
+- Landing page dari halaman sederhana menjadi interactive demo page.
+
+Deploy Note:
+
+- Repo sudah dipush ke `main`.
+- Vercel project `Fitbite` belum terlihat di daftar project Vercel yang tersedia.
+- Tool Vercel meminta deploy via CLI `vercel deploy` atau Git Integration.
+- Setelah repo di-import ke Vercel, push ke `main` bisa trigger deployment otomatis.
+
+Pending:
+
+- Import `adith92/Fitbite` ke Vercel.
+- Pastikan build pertama berhasil.
+- Bersihkan sisa file lama dari repo sebelumnya jika mengganggu build.
 
 ---
 
