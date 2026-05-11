@@ -101,6 +101,15 @@ export default function HomePage() {
           <h2>Future Plan</h2>
           <div style={styles.planGrid}>{["Supabase Auth", "Checkout Manual", "Telegram Bot", "Reports", "AI Recipe JSON", "WhatsApp API", "Payment Gateway", "Delivery API"].map((x) => <span key={x}>{x}</span>)}</div>
         </section>
+
+        <section style={styles.quickRoutes}>
+          <h2>Route Demo Cepat</h2>
+          <div style={styles.quickRouteGrid}>
+            <a href="/body-check">/body-check</a>
+            <a href="/ingredients">/ingredients</a>
+            <a href="/admin">/admin</a>
+          </div>
+        </section>
       </section>
     </main>
   );
@@ -147,6 +156,8 @@ const styles: Record<string, React.CSSProperties> = {
   orderRow: { background: "rgba(255,255,255,.1)", borderRadius: 18, padding: 16, display: "flex", justifyContent: "space-between" },
   plan: { background: "white", borderRadius: 34, padding: 28, marginBottom: 44 },
   planGrid: { display: "flex", flexWrap: "wrap", gap: 12 },
+  quickRoutes: { background: "white", borderRadius: 34, padding: 28, marginBottom: 44 },
+  quickRouteGrid: { display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 12, fontWeight: 800 },
 };
 
 const css = `
@@ -164,5 +175,10 @@ const css = `
   @keyframes phoneFloat { 0%, 100% { transform: translateY(0) rotate(1deg); } 50% { transform: translateY(-14px) rotate(-1deg); } }
   @keyframes popCard { from { opacity: 0; transform: scale(.96) translateY(18px); } to { opacity: 1; transform: scale(1) translateY(0); } }
   @keyframes toast { from { opacity: 0; transform: translateX(-50%) translateY(14px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-  @media (max-width: 820px) { main section[style] { } h1 { font-size: 42px !important; } }
+  @media (max-width: 980px) {
+    main section[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 820px) {
+    h1 { font-size: 42px !important; }
+  }
 `;

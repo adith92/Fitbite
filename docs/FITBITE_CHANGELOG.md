@@ -16,6 +16,36 @@ Semua perubahan penting project Fitbite dicatat di file ini.
 
 ---
 
+## V1.3 - Deployable Demo Cleanup and Vercel Ready
+
+Tanggal: 2026-05-11
+
+Added:
+
+- Menambahkan `app/globals.css` dan import ke `app/layout.tsx`.
+- Menambahkan `docs/LEGACY_NOTES.md` untuk catatan cleanup file legacy.
+- Menambahkan `vercel.json` minimal dengan framework `nextjs`.
+- Menambahkan quick links route demo (`/body-check`, `/ingredients`, `/admin`) di landing page.
+
+Changed:
+
+- Menyederhanakan `app/layout.tsx` agar mengikuti pola App Router standar Next.js.
+- Merapikan dokumentasi utama: `PROJECT_INDEX.md`, `AI_README.md`, dan `README.md` ke status V1.3.
+- Menyesuaikan CSS responsif landing demo agar lebih aman di layar mobile.
+
+Fixed:
+
+- Build root Next.js sudah clean dan sukses dengan `npm run build`.
+- Route `/`, `/body-check`, `/ingredients`, dan `/admin` berhasil diprerender static.
+- Membersihkan root dari file/folder project lama yang mengganggu fokus Fitbite.
+
+Pending:
+
+- Import repo ke Vercel dengan nama project `fitbitedemo`.
+- Lanjut fase V1.4: pantry dan recipe MVP dengan data yang lebih realistis.
+
+---
+
 ## V1.2 - Interactive Demo Mockup and Deploy Preparation
 
 Tanggal: 2026-05-11

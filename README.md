@@ -1,76 +1,55 @@
-# 🍱 Fitbite
+# Fitbite
 
-**Version: V1.1**
+Version: V1.3
 
-Fitbite adalah aplikasi healthy food-tech untuk Indonesia: cookbook sehat, AI pantry recipe suggester, nutrition tracker, smart catering order, dan admin dashboard.
+Fitbite adalah aplikasi healthy food-tech untuk Indonesia: body check, target nutrisi (estimasi), input bahan rumah, rekomendasi resep sehat, dan demo order catering dengan preview admin dashboard.
 
-## 🎯 Misi
+## Fitur Demo Aktif
 
-Bantu orang Indonesia makan lebih sehat, lebih hemat, lebih personal, dan mengurangi food waste.
+- Landing demo interaktif Fitbite.
+- Program selector: Diet, Cutting, Bulking, Maintain.
+- Target calories/protein berubah sesuai program.
+- Pantry input mockup.
+- Recipe recommendation cards.
+- Tombol `Pesan Versi Catering` + toast feedback.
+- Preview owner/admin dashboard.
+- Route demo: `/body-check`, `/ingredients`, `/admin`.
 
-## 🧠 Core Flow
+## Prinsip Produk
 
-1. 👤 User isi data tubuh
-2. 🔥 App hitung kalori dan macro
-3. 🧊 User input bahan rumah
-4. 🤖 AI rekomendasi resep sehat Nusantara
-5. 🍳 User masak sendiri atau pesan catering sehat
-6. 📲 Order masuk ke dashboard dan notifikasi owner
-7. 📊 Semua masuk laporan bisnis
+- Fokus Indonesia, halal-first, local ingredients, zero-waste.
+- Copy user-facing menggunakan Bahasa Indonesia.
+- Kalkulasi nutrisi adalah estimasi, bukan diagnosis medis.
 
-## ✨ Modul Utama
+## Tech Stack
 
-- 👥 Customer app
-- ⚖️ Body check
-- 🧊 Pantry ingredient input
-- 🤖 AI recipe recommendation
-- 🍱 Healthy catering order
-- 🧑‍🍳 Admin dashboard
-- 📲 Telegram notification
-- 📊 Dashboard report
+- Next.js (App Router)
+- React + TypeScript
+- Deploy target: Vercel (`fitbitedemo`)
 
-## 🏗️ Architecture
+## Menjalankan Lokal
 
-- Frontend: Next.js + TypeScript
-- Styling: Tailwind CSS planned
-- Backend: Supabase
-- Database: PostgreSQL
-- Auth: Supabase Auth
-- Storage: Supabase Storage
-- Deploy: Vercel
-- Notification MVP: Telegram Bot
-- Future: WhatsApp Cloud API, payment gateway, delivery API
-
-## 🧭 Roadmap Singkat
-
-- V1.0: Initial scaffold
-- V1.1: Documentation, prompt, changelog, architecture notes
-- V1.2: Clean repo and deploy base
-- V1.3: Customer core
-- V1.4: Pantry and recipe MVP
-- V1.5: Catering order MVP
-- V1.6: Admin dashboard MVP
-- V1.7: Reports
-- V2.0: AI and automation
-
-## 📚 Project Docs
-
-- docs/NOTES.md
-- docs/ROADMAP.md
-- docs/VERCEL_DEPLOY.md
-- docs/PROJECT_CONTEXT_PROMPT.md
-- docs/PROJECT_PLAN.md
-- CHANGELOG.md
-
-## 🚀 Local Development
-
+```bash
 npm install
+npm run build
 npm run dev
+```
 
-## 🌐 Deploy
+## Deploy Vercel
 
-Import repo `adith92/Fitbite` ke Vercel sebagai Next.js project.
+- Import repo `adith92/Fitbite`
+- Project name: `fitbitedemo`
+- Framework: Next.js
+- Build command: `npm run build`
+- Output: default
+- Env vars: tidak wajib untuk demo V1.3
 
-## 📝 Versioning Rule
+## Dokumen Utama
 
-Setiap perubahan besar wajib dicatat di CHANGELOG.md dan versi naik 1 step: V1.0, V1.1, V1.2, dan seterusnya. 🧭
+- `PROJECT_INDEX.md`
+- `AI_README.md`
+- `docs/PROJECT_CONTEXT_PROMPT.md`
+- `docs/PROJECT_PLAN.md`
+- `docs/FITBITE_CHANGELOG.md`
+- `docs/VERCEL_DEPLOY.md`
+- `docs/LEGACY_NOTES.md`

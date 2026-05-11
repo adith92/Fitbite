@@ -1,123 +1,90 @@
 # Fitbite Project Index
 
-Version: V1.1
+Version: V1.3
 
-This file is the main index for ChatGPT, Codex, and developers working on Fitbite.
+File ini adalah indeks utama untuk developer/AI yang bekerja di repo Fitbite.
 
 ## Project Identity
 
-Fitbite is a healthy food-tech app for Indonesia.
+Fitbite adalah aplikasi healthy food-tech untuk Indonesia.
 
-It combines:
+Fitur inti:
 
-- Body check and nutrition target.
-- Pantry ingredient input.
+- Body check dan target nutrisi.
+- Input bahan dapur (pantry).
 - AI recipe recommendation.
-- Healthy catering order.
-- Admin dashboard.
-- Telegram notification.
-- Business reports.
+- Healthy catering order (demo flow).
+- Admin dashboard preview.
+- Telegram notification helper.
+- Business report plan.
 
 ## Current Status
 
-Current version: V1.1
+Current version: V1.3
 
-Current phase: Documentation and Project Brain.
+Current phase: Deployable interactive demo base.
 
-Next phase: V1.2 Clean Repo and Deploy Base.
+Next phase: Customer core implementation.
 
 ## Main Product Flow
 
-1. User fills body data.
-2. App calculates BMI, BMR, TDEE, calories, and macros.
-3. User inputs ingredients available at home.
-4. App recommends healthy Indonesian recipes.
-5. User can cook, order extra ingredients, or order healthy catering.
-6. Order goes to admin dashboard.
-7. Owner receives Telegram notification.
-8. Kitchen and delivery are handled manually first.
-9. Reports summarize sales, menu, member, kitchen, and delivery data.
+1. User isi data tubuh.
+2. App hitung BMI, BMR, TDEE, kalori, dan makro (estimasi).
+3. User input bahan yang ada di rumah.
+4. App beri rekomendasi resep sehat lokal.
+5. User bisa lanjut order catering sehat.
+6. Order masuk admin dashboard.
+7. Owner menerima notifikasi (Telegram helper).
+8. Kitchen dan delivery masih manual untuk MVP awal.
+9. Report bisnis dirangkum bertahap.
+
+## Active Structure (Root)
+
+- `app/` -> Next.js App Router pages.
+- `lib/` -> helper logic.
+- `docs/` -> dokumen produk, roadmap, changelog, deploy.
+- `memory/` -> catatan produk Fitbite.
+- `package.json` -> root config build.
+- `next.config.ts`, `tsconfig.json`, `postcss.config.js`.
+- `vercel.json` -> deployment hint aman untuk Vercel.
 
 ## Important Files
 
-- README.md: project overview.
-- PROJECT_INDEX.md: this index file.
-- docs/PROJECT_CONTEXT_PROMPT.md: AI/developer context prompt.
-- docs/PROJECT_PLAN.md: product and MVP plan.
-- docs/FITBITE_CHANGELOG.md: official Fitbite changelog.
-- docs/ROADMAP.md: phased roadmap.
-- docs/NOTES.md: project notes.
-- docs/VERCEL_DEPLOY.md: deploy guide.
-- package.json: root Next.js package config.
-- app/page.tsx: main landing page.
-- app/body-check/page.tsx: body check page.
-- app/ingredients/page.tsx: ingredient input page.
-- app/admin/page.tsx: admin dashboard page.
-- lib/nutrition.ts: nutrition calculation helper.
-- lib/telegram.ts: Telegram order message helper.
-
-## Architecture
-
-Frontend:
-
-- Next.js.
-- TypeScript.
-- App Router.
-- Vercel deploy.
-
-Backend planned:
-
-- Supabase.
-- PostgreSQL.
-- Supabase Auth.
-- Supabase Storage.
-
-Notification planned:
-
-- Telegram Bot for MVP.
-- WhatsApp Cloud API later.
-
-Payment and delivery:
-
-- Manual transfer first.
-- Manual ojol/logistic first.
-- Gateway and delivery API later.
+- `PROJECT_INDEX.md`
+- `AI_README.md`
+- `README.md`
+- `docs/PROJECT_CONTEXT_PROMPT.md`
+- `docs/PROJECT_PLAN.md`
+- `docs/FITBITE_CHANGELOG.md`
+- `docs/ROADMAP.md`
+- `docs/VERCEL_DEPLOY.md`
+- `docs/LEGACY_NOTES.md`
+- `app/page.tsx`
+- `app/body-check/page.tsx`
+- `app/ingredients/page.tsx`
+- `app/admin/page.tsx`
+- `lib/nutrition.ts`
+- `lib/telegram.ts`
 
 ## Versioning Rule
 
-Every meaningful change must update docs/FITBITE_CHANGELOG.md.
+Setiap perubahan berarti wajib dicatat di `docs/FITBITE_CHANGELOG.md`.
 
-Version sequence:
+Urutan versi utama:
 
-- V1.0 Initial Scaffold.
-- V1.1 Documentation and Project Brain.
-- V1.2 Clean Repo and Deploy Base.
-- V1.3 Customer Core.
-- V1.4 Pantry and Recipe MVP.
-- V1.5 Catering Order MVP.
-- V1.6 Admin Dashboard MVP.
+- V1.0 Initial scaffold.
+- V1.1 Documentation and project brain.
+- V1.2 Interactive demo mockup and deploy preparation.
+- V1.3 Deployable demo cleanup dan Vercel-ready base.
+- V1.4 Pantry and recipe MVP.
+- V1.5 Catering order MVP.
+- V1.6 Admin dashboard MVP.
 - V1.7 Reports.
-- V2.0 AI and Automation.
+- V2.0 AI and automation.
 
-## Next Recommended Work
+## Rules
 
-V1.2 tasks:
-
-1. Audit all current repo files.
-2. Remove or isolate legacy files from the old project.
-3. Fix Next.js layout and styles.
-4. Ensure npm install works.
-5. Ensure npm run build works.
-6. Deploy to Vercel.
-7. Update docs/FITBITE_CHANGELOG.md to V1.2.
-
-## AI Instruction
-
-When working on this repo:
-
-- Read PROJECT_INDEX.md first.
-- Read docs/PROJECT_CONTEXT_PROMPT.md second.
-- Read docs/FITBITE_CHANGELOG.md before changing code.
-- Update changelog after meaningful changes.
-- Keep changes small and incremental.
-- Do not jump to V2.0 automation before MVP flows work.
+- Selalu baca `PROJECT_INDEX.md` dan `AI_README.md` dulu.
+- Untuk user-facing copy, gunakan Bahasa Indonesia.
+- Hindari klaim medis; kalkulasi nutrisi adalah estimasi.
+- Jangan implement payment gateway/delivery API/WhatsApp API di tahap demo ini.

@@ -1,20 +1,28 @@
-# Vercel Deploy Guide
+# Vercel Deploy Guide (Fitbite)
 
-Import repository:
+Target project:
 
-adith92/Fitbite
+- Project name: `fitbitedemo`
+- Domain target: `fitbitedemo.vercel.app`
+
+Repository:
+
+- `adith92/Fitbite`
 
 Settings:
 
 - Framework: Next.js
-- Build command: npm run build
+- Build command: `npm run build`
 - Output: default
 
-Environment variables from .env.example can be added later.
+Environment variables:
 
-Test routes:
+- Tidak ada env wajib untuk demo V1.3.
+- `.env.example` hanya placeholder untuk integrasi backend tahap berikutnya.
 
-- /
-- /body-check
-- /ingredients
-- /admin
+Test routes setelah deploy:
+
+- `/`
+- `/body-check`
+- `/ingredients`
+- `/admin`
