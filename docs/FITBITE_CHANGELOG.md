@@ -17,6 +17,32 @@ Semua perubahan penting project Fitbite dicatat di file ini.
 
 ---
 
+## V1.3.4 - Ingredient Box Wizard
+
+Tanggal: 2026-05-11
+
+Added:
+
+- Menetapkan flow `/wizard` dengan ingredient card terstruktur: nama bahan, jumlah, dan satuan.
+- Menjaga auto-add row saat bahan terakhir sudah terisi agar input lebih cepat.
+- Menjaga local autocomplete + autocorrect typo bahan Indonesia.
+
+Changed:
+
+- Menyetel release lock dokumen ke V1.3.4 (QUEUE-FB-2).
+- Menyelaraskan index/readme agar fokus fase wizard input.
+
+Fixed:
+
+- Validasi alur `Cek Menu` tetap terhubung ke `POST /api/ai/pantry-wizard` tanpa expose secret.
+- Build tetap bersih setelah sinkronisasi fase QUEUE-FB-2.
+
+Pending:
+
+- Lanjut ke QUEUE-FB-3: Recipe Result UX.
+
+---
+
 ## V1.3.3 - Fix OpenRouter Production AI Fallback
 
 Tanggal: 2026-05-11

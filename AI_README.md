@@ -12,11 +12,11 @@ Mulai dari file ini jika kamu AI assistant yang bekerja di repo Fitbite.
 
 ## Current Version
 
-V1.3.3
+V1.3.4
 
 ## Current Mission
 
-Stabilkan status AI aktif/fallback di production dan pastikan flow pantry wizard tetap aman.
+Stabilkan ingredient box wizard agar rapi, cepat dipakai, dan siap lanjut ke UX hasil resep.
 
 ## Rules
 

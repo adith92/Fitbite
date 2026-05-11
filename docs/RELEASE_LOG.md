@@ -4,13 +4,14 @@
 
 ### Release Lock
 
-- Version: V1.3.3
+- Version: V1.3.4
 - Project: fitbitedemo
 - Team: adith92s-projects
 - Production: https://fitbitedemo.vercel.app
 
-### Delivered (QUEUE-FB-1)
+### Delivered (QUEUE-FB-2)
 
-- Menambahkan endpoint `GET /api/ai/health`.
-- Wizard menampilkan status AI: aktif, missing env, provider error, fallback local.
-- Fallback local tetap aman saat provider gagal.
+- Wizard `/wizard` menggunakan ingredient box terstruktur (nama, jumlah, satuan).
+- Auto-add baris bahan berikutnya aktif saat baris terakhir terisi.
+- Autocomplete bahan lokal dan autocorrect typo bahan Indonesia aktif.
+- Tombol CTA tetap singkat `Cek Menu` dan terhubung ke `POST /api/ai/pantry-wizard`.
